@@ -1,116 +1,41 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
-      <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        />
+    <q-layout view="lHh Lpr lFf">
+        <q-header elevated>
+            <q-toolbar class="bg-white text-black q-pr-none q-py-md">
+                <q-avatar size="xl" style="font-size:50px;">
+                    <img :src="require('assets/metaforce.png')" />
+                </q-avatar>
+                <q-toolbar-title>
+                    <span class="text-h5 q-mx-sm">Metaforce</span>
+                    <span>
+                        <q-btn flat stretch label="Home" to="/" class="text-subtitle"></q-btn>
+                    </span>
+                </q-toolbar-title>
+                <!-- <q-btn icon="shopping_bag" color="deep-purple" flat stretch label="Pricing" to="/" class="text-subtitle"></q-btn> -->
+            </q-toolbar>
+        </q-header>
 
-        <q-toolbar-title>
-          Quasar App
-        </q-toolbar-title>
+        <q-page-container>
+            <router-view />
+        </q-page-container>
 
-        <div>Quasar v{{ $q.version }}</div>
-      </q-toolbar>
-    </q-header>
-
-    <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-    >
-      <q-list>
-        <q-item-label
-          header
-        >
-          Essential Links
-        </q-item-label>
-
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
-      </q-list>
-    </q-drawer>
-
-    <q-page-container>
-      <router-view />
-    </q-page-container>
-  </q-layout>
+        <q-footer class="bg-grey-1">
+            <q-separator class="bg-grey-3"></q-separator>
+            <q-toolbar class="text-black text-center" style="min-height:30px;">
+                <q-toolbar-title class="text-caption">
+                    <router-link to="/privacy">Privacy Policy</router-link> | © Copyright 2022 Metaforce+
+                </q-toolbar-title>
+            </q-toolbar>
+        </q-footer>
+    </q-layout>
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
-import EssentialLink from 'components/EssentialLink.vue'
-
-const linksList = [
-  {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
-  },
-  {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
-  },
-  {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
-  },
-  {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev'
-  },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev'
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev'
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
-  }
-]
+import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'MainLayout',
-
-  components: {
-    EssentialLink
-  },
-
-  setup () {
-    const leftDrawerOpen = ref(false)
-
-    return {
-      essentialLinks: linksList,
-      leftDrawerOpen,
-      toggleLeftDrawer () {
-        leftDrawerOpen.value = !leftDrawerOpen.value
-      }
+    name: 'MainLayout',
+    computed: {
     }
-  }
 })
 </script>
