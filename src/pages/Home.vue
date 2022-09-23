@@ -1,6 +1,6 @@
 <template>
     <q-page>
-        <q-parallax height="700" :speed="0.99" :src="require('assets/home-bg.png')" class="text-white text-center">
+        <q-parallax style="height:700px" :speed="0.99" :src="require('assets/home-bg.png')" class="text-white text-center">
             <div class="text-h2 text-bold q-mb-md">Welcome To Metaforce World</div>
             <div class="text-h6 q-ma-xl q-px-xl">Metaforce is a powerful salesforce adminstration and development tool <br />which helps you to manage and customize your salesforce organizations faster and easier!</div>
             <div class="user-guide-links text-h6 q-mb-lg q-px-xl">
@@ -11,9 +11,7 @@
             </div>
             <div class="q-my-xl">
                 <q-btn class="bg-blue-9 q-px-lg q-ma-md" type="a" target="_blank" href="/" size="md" flat icon="laptop" label="Install For Mac OS"></q-btn>
-                <q-btn class="bg-blue-9 q-px-lg q-ma-md" disable type="a" target="_blank" href="/" size="md" flat icon="tablet_mac" label="Install For IPAD(Coming Soon...)"></q-btn>
-                <q-btn class="bg-deep-purple-8 q-px-lg q-ma-md " type="a" target="_blank" href="https://allen-li.notion.site/Metaforce-User-Guide-03bfa81b0cc646259c75669d76386d7a" size="md" flat icon="menu_book" label="Check User Guide"></q-btn>
-                <q-btn class="bg-green-9 q-px-lg q-ma-md " type="a" target="_blank" href="https://groups.google.com/g/metaforce-support" size="md" flat icon="diversity_1" label="Join Our Group"></q-btn>
+                <q-btn class="bg-grey-6 q-px-lg q-ma-md" type="a" target="_blank" href="/" size="md" flat icon="tablet_mac" label="Install For IPAD(Coming Soon...)" disable></q-btn>
             </div>
         </q-parallax>
     </q-page>
