@@ -33,7 +33,7 @@
                             In Metaforce, you can connect and manage all your salesforce organizations via <a href="https://oauth.net/2/" target="_blank">OAuth 2.0 protocol</a>.
                             <div class="q-mt-sm">Once connected, you can perform handy actions below:</div>
                             <ul class="q-mt-xs">
-                                <li><b :class="`text-${featuredTabColor}`">Quick Login</b> - Access your salesforce org by one click! No password needed any more!</li>
+                                <li><b :class="`text-${featuredTabColor}`">Quick Login</b> - Access your salesforce org by one click! No password and MFA code needed any more!</li>
                                 <li><b :class="`text-${featuredTabColor}`">Copy Login Link</b> - Share a login link to grant temporary access to people you trust.</li>
                                 <li><b :class="`text-${featuredTabColor}`">Copy Access Token</b> - Get access token for calling salesforce api or other integration purpose.</li>
                                 <li><b :class="`text-${featuredTabColor}`">Set New Password</b> - Set a new password directly for the user in your org.</li>
@@ -72,7 +72,7 @@
                 </q-tab-panel>
 
                 <q-tab-panel name="Deployments" class="row q-py-xl featured-tab">
-                    <div class="col-auto q-mt-xs q-mr-md">
+                    <div class="col-auto q-mr-md">
                         <q-icon color="teal" size="md" name="rocket"></q-icon>
                     </div>
                     <div class="col q-pr-sm">
@@ -117,8 +117,8 @@
             </q-tab-panels>
         </div>
 
-        <q-parallax :speed="0.99" :src="require('assets/home-bg.png')" class="contact-us text-white text-center">
-            <div class="row q-pa-xl">
+        <q-parallax height="600" :speed="1" :src="require('assets/home-bg.png')" class="contact-us text-white text-center">
+            <div class="row q-pa-xl q-mx-xl">
                 <div class="col text-center">
                     <div class="text-h4 text-bold q-pb-md">Submit A Case</div>
                     <q-form v-if="!caseId" ref="caseForm" @submit="submitForm">
@@ -138,8 +138,7 @@
                         <div>Case Id: {{caseId}}</div>
                     </div>
                 </div>
-                <div class="col text-center q-ml-xl q-mt-md">
-                    <!-- <q-parallax src="~assets/contact-us.png"></q-parallax> -->
+                <div class="col text-center q-ml-xl q-mt-xl">
                     <q-img style="width:300px;" class="rounded-borders cursor-pointer" src="~assets/contact-us.png" />
                 </div>
             </div>
