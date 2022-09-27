@@ -10,9 +10,8 @@
                 <q-toolbar-title>
                     <router-link to="/" class="text-h5 q-mx-sm" style="color:black;text-decoration:none;">Metaforce</router-link>
                 </q-toolbar-title>
-                <!-- <q-btn icon="shopping_bag" color="deep-purple" flat stretch label="Pricing" to="/" class="text-subtitle"></q-btn> -->
                 <q-btn class="q-px-lg" type="a" target="_blank" href="https://allen-li.notion.site/Metaforce-User-Guide-03bfa81b0cc646259c75669d76386d7a" size="md" flat icon="menu_book" label="Check User Guide"></q-btn>
-                <q-btn class="q-px-lg" type="a" target="_blank" href="https://groups.google.com/g/metaforce-support" size="md" flat icon="diversity_1" label="Join Our Group"></q-btn>
+                <q-btn class="q-px-lg" @click="scorllToBottom" size="md" flat icon="live_help" label="Submit A Case"></q-btn>
             </q-toolbar>
         </q-header>
 
@@ -20,14 +19,14 @@
             <router-view />
         </q-page-container>
 
-        <q-footer class="bg-grey-1">
+        <div class="bg-grey-1">
             <q-separator class="bg-grey-3"></q-separator>
             <q-toolbar class="text-black text-center" style="min-height:30px;">
                 <q-toolbar-title class="text-caption">
                     © Copyright 2022 Metaforce | <router-link to="/privacy" class="policy-link">Privacy Policy</router-link>
                 </q-toolbar-title>
             </q-toolbar>
-        </q-footer>
+        </div>
     </q-layout>
 </template>
 <style lang="scss" scoped>
@@ -45,6 +44,11 @@ import { defineComponent } from 'vue'
 export default defineComponent({
     name: 'MainLayout',
     computed: {
+    },
+    methods: {
+        scorllToBottom () {
+            window.scrollTo(0, document.body.scrollHeight);
+        }
     }
 })
 </script>

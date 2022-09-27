@@ -129,7 +129,7 @@
         </div>
 
         <q-parallax height="600" :speed="1" :src="require('assets/home-bg.png')" class="contact-us text-white text-center">
-            <div class="row q-pa-xl q-mx-xl">
+            <div id="submitCaseDiv" class="row q-pa-xl q-mx-xl">
                 <div class="col text-center">
                     <div class="text-h4 text-bold q-pb-md">Submit A Case</div>
                     <q-form v-if="!caseId" ref="caseForm" @submit="submitForm">
@@ -145,8 +145,8 @@
                     </q-form>
                     <div v-else class="text-h6 q-mt-lg">
                         <div class="q-mb-sm">Congrats!</div>
-                        <div>Your case has been submitted to us and we will get back to you ASAP.</div>
-                        <div>Case Id: {{caseId}}</div>
+                        <div>Your case has been submitted successfully. We will get back to you ASAP.</div>
+                        <div>Case Number: {{caseId}}</div>
                     </div>
                 </div>
                 <div class="col text-center q-ml-xl q-mt-xl">
