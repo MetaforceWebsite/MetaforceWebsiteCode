@@ -6,8 +6,8 @@
             <!--  <div class="user-guide-links text-h6 q-mb-lg q-px-xl">
                 <a target="_blank" href="https://allen-li.notion.site/Organizations-4350afbe73f040d2b25531020b983cee">Manage Organizations</a> |
                 <a target="_blank" href="https://allen-li.notion.site/Projects-be46c2c8c1bd4942a99224cb173fad96">Projects (Apex Code Editor)</a> |
-                <a target="_blank" href="https://allen-li.notion.site/Deployments-fbda9eed87bd43a4a68c1146d6b4f840">Metadata Deployments</a> |
-                <a target="_blank" href="https://allen-li.notion.site/Data-Manager-c397c2ba17a94e08a63a0b594dc41366">Data Export/Import</a>
+                <a target="_blank" href="">Metadata Deployments</a> |
+                <a target="_blank" href="">Data Export/Import</a>
             </div> -->
             <div class="q-mt-xl">
                 <q-btn class="q-px-xl q-py-sm q-ma-md" style="background-color:rgba(2,123,227,0.8);" type="a" target="_blank" href="/" size="md" flat icon="laptop" label="Install For Mac OS"></q-btn>
@@ -28,13 +28,15 @@
                         <q-icon color="primary" size="sm" name="hub"></q-icon>
                     </div>
                     <div class="col q-pr-xl">
-                        <div class="text-h5 text-primary">Manage Org Connections</div>
+                        <div class="text-h5 text-primary">Manage Org Connections
+                            <q-icon :color="featuredTabColor" @click="openUrl('https://allen-li.notion.site/Organizations-4350afbe73f040d2b25531020b983cee')" class="cursor-pointer" size="xs" name="open_in_new"></q-icon>
+                        </div>
                         <div class="q-mt-md">
                             In Metaforce, you can connect and manage all your salesforce organizations via <a href="https://oauth.net/2/" target="_blank">OAuth 2.0 protocol</a>.
                             <div class="q-mt-sm">Once connected, you can perform handy actions below:</div>
                             <ul class="q-mt-xs">
                                 <li><b :class="`text-${featuredTabColor}`">Quick Login</b> - Access your salesforce org by one click! No password and MFA code needed any more!</li>
-                                <li><b :class="`text-${featuredTabColor}`">Copy Login Link</b> - Share a login link to grant temporary access to people you trust.</li>
+                                <li><b :class="`text-${featuredTabColor}`">Copy Login Link</b> - Share a temporary login link to people you trust.</li>
                                 <li><b :class="`text-${featuredTabColor}`">Copy Access Token</b> - Get access token for calling salesforce api or other integration purpose.</li>
                                 <li><b :class="`text-${featuredTabColor}`">Set New Password</b> - Set a new password directly for the user in your org.</li>
                                 <li><b :class="`text-${featuredTabColor}`">Secret Notes</b> - Keep secret notes under your organization, like password, security token, etc.</li>
@@ -43,7 +45,7 @@
                         </div>
                     </div>
                     <div class="col">
-                        <q-img @click="popupImageName=require('assets/images/project-demo.jpg')" class="rounded-borders cursor-pointer" src="~assets/images/orgs-demo.jpg" />
+                        <q-img @click="popupImageName=require('assets/images/orgs-demo.jpg')" class="rounded-borders cursor-pointer" src="~assets/images/orgs-demo.jpg" />
                     </div>
                 </q-tab-panel>
 
@@ -52,7 +54,10 @@
                         <q-icon color="deep-purple-9" size="sm" name="handyman"></q-icon>
                     </div>
                     <div class="col q-pr-sm">
-                        <div class="text-h5 text-deep-purple-9">Build Projects To Start SFDC Dev</div>
+                        <div class="text-h5 text-deep-purple-9">
+                            Build Projects To Start SFDC Dev
+                            <q-icon :color="featuredTabColor" @click="openUrl('https://allen-li.notion.site/Projects-be46c2c8c1bd4942a99224cb173fad96')" class="cursor-pointer" size="xs" name="open_in_new"></q-icon>
+                        </div>
                         <div class="q-mt-md">
                             In Metaforce, you can create a project to start your salesforce development just by few clicks! <br />Metaforce provides its own code editor to view and update your apex/page/aura/lwc code directly. It's <span class="text-bold">FASTER AND EASIER</span> than sfdx tool in visual studio code!
                             <div class="q-mt-sm">Metaforce Project provides following core actions:</div>
@@ -76,7 +81,10 @@
                         <q-icon color="teal" size="md" name="rocket"></q-icon>
                     </div>
                     <div class="col q-pr-sm">
-                        <div class="text-h5 text-teal">Deploy Metadata Changes In Real Time</div>
+                        <div class="text-h5 text-teal">
+                            Deploy Metadata Changes In Real Time
+                            <q-icon :color="featuredTabColor" @click="openUrl('https://allen-li.notion.site/Deployments-fbda9eed87bd43a4a68c1146d6b4f840')" class="cursor-pointer" size="xs" name="open_in_new"></q-icon>
+                        </div>
                         <div class="q-mt-md">
                             Metaforce can perform a quick salesforce deployment to any target org by few clicks! And you can aslo view difference between source org and target org before the deployment starts. It's exciting, right?
                             <div class="q-mt-sm">Metaforce deployment provides following core options:</div>
@@ -99,7 +107,10 @@
                         <q-icon color="teal" size="md" name="webhook"></q-icon>
                     </div>
                     <div class="col q-pr-sm">
-                        <div class="text-h5 text-teal">Simplify Your Data Migration</div>
+                        <div class="text-h5 text-teal">
+                            Simplify Your Data Migration
+                            <q-icon :color="featuredTabColor" @click="openUrl('https://allen-li.notion.site/Data-Manager-c397c2ba17a94e08a63a0b594dc41366')" class="cursor-pointer" size="xs" name="open_in_new"></q-icon>
+                        </div>
                         <div class="q-mt-md">
                             Metaforce makes salesforce data migration to be easier! You can easily start a <a href="https://developer.salesforce.com/docs/atlas.en-us.api_asynch.meta/api_asynch/asynch_api_quickstart.htm" target="_blank">Bulk API 2.0</a> job to import/export data. We also provide an easy way to sync data between your objects directly without exporting them.
                             <div class="q-mt-sm">Metaforce Data Manager provides following core actions:</div>
@@ -155,6 +166,7 @@
 <script>
 import { api } from 'src/boot/axios';
 import { defineComponent } from 'vue'
+import { openURL } from 'quasar'
 export default defineComponent({
     name: 'IndexPage',
     data () {
@@ -182,13 +194,15 @@ export default defineComponent({
             this.isSubmitting = true;
             this.$refs.caseForm.validate().then(async success => {
                 if (success) {
+                    this.caseForm.origin = 'Website';
                     this.caseId = (await api.post('/website/contactus/', this.caseForm))?.data;
                 }
                 this.isSubmitting = false;
             }).catch(ex => {
                 this.isSubmitting = false;
             })
-        }
+        },
+        openUrl (url) { openURL(url); }
     }
 })
 </script>
