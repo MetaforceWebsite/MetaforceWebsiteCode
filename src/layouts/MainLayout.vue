@@ -23,7 +23,7 @@
             <q-separator class="bg-grey-3"></q-separator>
             <q-toolbar class="text-black text-center" style="min-height:30px;">
                 <q-toolbar-title class="text-caption">
-                    © Copyright 2022 Metaforce | <router-link to="/privacy" class="policy-link">Privacy Policy</router-link>
+                    © Copyright 2022 Metaforce+ | <router-link to="/privacy" class="policy-link">Privacy Policy</router-link>
                 </q-toolbar-title>
             </q-toolbar>
         </div>

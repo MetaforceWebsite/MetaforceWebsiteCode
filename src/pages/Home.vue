@@ -2,16 +2,9 @@
     <q-page>
         <q-parallax style="height:700px" :speed="1" :src="require('assets/home-bg.png')" class="text-white text-center">
             <div class="text-h2 text-bold q-mb-md">Welcome To Metaforce World</div>
-            <div class="text-h6 q-ma-xl q-px-xl q-pt-md">Metaforce is a powerful salesforce adminstration and development tool <br />which helps you to manage and customize your salesforce organizations faster and easier!</div>
-            <!--  <div class="user-guide-links text-h6 q-mb-lg q-px-xl">
-                <a target="_blank" href="https://allen-li.notion.site/Organizations-4350afbe73f040d2b25531020b983cee">Manage Organizations</a> |
-                <a target="_blank" href="https://allen-li.notion.site/Projects-be46c2c8c1bd4942a99224cb173fad96">Projects (Apex Code Editor)</a> |
-                <a target="_blank" href="">Metadata Deployments</a> |
-                <a target="_blank" href="">Data Export/Import</a>
-            </div> -->
+            <div class="text-h6 q-ma-xl q-px-xl q-pt-md">Metaforce is a powerful salesforce administration and development tool <br />which helps you to manage and customize your salesforce organizations faster and easier!</div>
             <div class="q-mt-xl">
-                <q-btn class="q-px-xl q-py-sm q-ma-md" style="background-color:rgba(2,123,227,0.8);" type="a" target="_blank" href="/" size="md" flat icon="laptop" label="Install For Mac OS"></q-btn>
-                <q-btn class="bg-grey-6 q-px-xl q-py-sm q-ma-md" type="a" target="_blank" href="/" size="md" flat icon="tablet_mac" label="Install For IPAD(Coming Soon...)" disable></q-btn>
+                <q-btn class="q-px-xl q-py-sm q-ma-md text-bold" style="background-color:rgba(2,123,227,0.8);" type="a" target="_blank" href="https://apps.apple.com/us/app/metaforce/id1643287394" size="md" flat :icon="installButton.icon" :label="installButton.label"></q-btn>
             </div>
         </q-parallax>
 
@@ -182,12 +175,18 @@ export default defineComponent({
 
             caseForm: { name: '', email: '', subject: '', details: '' },
             isSubmitting: false,
-            caseId: ''
+            caseId: '',
         }
     },
     computed: {
         isImagePopup () { return this.popupImageName.length > 0; },
-        featuredTabColor () { return this.featureTabToColor[this.focusedFeatureTab] }
+        featuredTabColor () { return this.featureTabToColor[this.focusedFeatureTab] },
+        installButton () {
+            let platformIs = this.$q.platform.is;
+            if (platformIs.ipad) return { icon: 'tablet_mac', label: 'Install On Your IPad' };
+            if (platformIs.win) return { icon: 'desktop_windows', label: 'Install On Your Windows' };
+            return { icon: 'laptop', label: 'Install On Your Mac' };
+        }
     },
     methods: {
         submitForm () {
