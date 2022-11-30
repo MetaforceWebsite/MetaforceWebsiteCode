@@ -2,9 +2,13 @@
     <q-page>
         <q-parallax style="height:700px" :speed="1" :src="require('assets/home-bg.png')" class="text-white text-center">
             <div class="text-h2 text-bold q-mb-md">Welcome To Metaforce World</div>
-            <div class="text-h6 q-ma-xl q-px-xl q-pt-md">Metaforce is a powerful salesforce administration and development tool <br />which helps you to manage and customize your salesforce organizations faster and easier!</div>
+            <div class="text-h6 q-ma-xl q-px-xl q-pt-md">
+                <div>Metaforce is a powerful salesforce administration and development tool <br />which helps you to manage and customize your salesforce organizations faster and easier!</div>
+                <div style="margin-top:15px;font-size:1rem;">Org Management | Apex Development | Data Process | Metadata Deployment</div>
+                <span class="inline-block q-mt-lg" style="border-top:1px dashed white;border-bottom:1px dashed white;">Available On Mac OS, IPad, Windows</span>
+            </div>
             <div class="q-mt-xl">
-                <q-btn class="q-px-xl q-py-sm q-ma-md text-bold" style="background-color:rgba(2,123,227,0.8);" type="a" target="_blank" href="https://apps.apple.com/us/app/metaforce/id1643287394" size="md" flat :icon="installButton.icon" :label="installButton.label"></q-btn>
+                <q-btn class="q-px-xl q-py-sm q-ma-md text-bold" style="background-color:rgba(2,123,227,0.8);" type="a" target="_blank" :href="installButton.link" size="md" flat :icon="installButton.icon" :label="installButton.label"></q-btn>
             </div>
         </q-parallax>
 
@@ -22,8 +26,8 @@
                     </div>
                     <div class="col q-pr-xl">
                         <div class="text-h5 text-primary">Manage Org Connections
-                            <q-icon :color="featuredTabColor" @click="openUrl('https://allen-li.notion.site/Organizations-4350afbe73f040d2b25531020b983cee')" class="cursor-pointer" size="xs" name="open_in_new"></q-icon>
-                        </div>
+                            <q-icon :color="featuredTabColor" @click="openUrl('https://metaforce-go.notion.site/Organizations-4350afbe73f040d2b25531020b983cee')" class="cursor-pointer" size="xs" name="open_in_new"></q-icon>
+                        </div>https://metaforce-go.notion.site/
                         <div class="q-mt-md">
                             In Metaforce, you can connect and manage all your salesforce organizations via <a href="https://oauth.net/2/" target="_blank">OAuth 2.0 protocol</a>.
                             <div class="q-mt-sm">Once connected, you can perform handy actions below:</div>
@@ -49,7 +53,7 @@
                     <div class="col q-pr-sm">
                         <div class="text-h5 text-deep-purple-9">
                             Build Projects To Start SFDC Dev
-                            <q-icon :color="featuredTabColor" @click="openUrl('https://allen-li.notion.site/Projects-be46c2c8c1bd4942a99224cb173fad96')" class="cursor-pointer" size="xs" name="open_in_new"></q-icon>
+                            <q-icon :color="featuredTabColor" @click="openUrl('https://metaforce-go.notion.site/Projects-be46c2c8c1bd4942a99224cb173fad96')" class="cursor-pointer" size="xs" name="open_in_new"></q-icon>
                         </div>
                         <div class="q-mt-md">
                             In Metaforce, you can create a project to start your salesforce development just by few clicks! <br />Metaforce provides its own code editor to view and update your apex/page/aura/lwc code directly. It's <span class="text-bold">FASTER AND EASIER</span> than sfdx tool in visual studio code!
@@ -76,7 +80,7 @@
                     <div class="col q-pr-sm">
                         <div class="text-h5 text-teal">
                             Deploy Metadata Changes In Real Time
-                            <q-icon :color="featuredTabColor" @click="openUrl('https://allen-li.notion.site/Deployments-fbda9eed87bd43a4a68c1146d6b4f840')" class="cursor-pointer" size="xs" name="open_in_new"></q-icon>
+                            <q-icon :color="featuredTabColor" @click="openUrl('https://metaforce-go.notion.site/Deployments-fbda9eed87bd43a4a68c1146d6b4f840')" class="cursor-pointer" size="xs" name="open_in_new"></q-icon>
                         </div>
                         <div class="q-mt-md">
                             Metaforce can perform a quick salesforce deployment to any target org by few clicks! And you can aslo view difference between source org and target org before the deployment starts. It's exciting, right?
@@ -102,7 +106,7 @@
                     <div class="col q-pr-sm">
                         <div class="text-h5 text-teal">
                             Simplify Your Data Migration
-                            <q-icon :color="featuredTabColor" @click="openUrl('https://allen-li.notion.site/Data-Manager-c397c2ba17a94e08a63a0b594dc41366')" class="cursor-pointer" size="xs" name="open_in_new"></q-icon>
+                            <q-icon :color="featuredTabColor" @click="openUrl('https://metaforce-go.notion.site/Data-Manager-c397c2ba17a94e08a63a0b594dc41366')" class="cursor-pointer" size="xs" name="open_in_new"></q-icon>
                         </div>
                         <div class="q-mt-md">
                             Metaforce makes salesforce data migration to be easier! You can easily start a <a href="https://developer.salesforce.com/docs/atlas.en-us.api_asynch.meta/api_asynch/asynch_api_quickstart.htm" target="_blank">Bulk API 2.0</a> job to import/export data. We also provide an easy way to sync data between your objects directly without exporting them.
@@ -116,6 +120,29 @@
                     </div>
                     <div class="col">
                         <q-img @click="popupImageName=require('assets/images/data-demo.jpg')" class="rounded-borders cursor-pointer" src="~assets/images/data-demo.jpg" />
+                    </div>
+                </q-tab-panel>
+
+                <q-tab-panel name="Flow Organizer" class="row q-py-xl featured-tab">
+                    <div class="col-auto q-mr-md">
+                        <q-icon color="deep-purple-9" size="md" name="account_tree"></q-icon>
+                    </div>
+                    <div class="col q-pr-sm">
+                        <div class="text-h5 text-deep-purple-9">
+                            Organize all your flows and PBs
+                            <q-icon :color="featuredTabColor" @click="openUrl('https://metaforce-go.notion.site/Data-Manager-c397c2ba17a94e08a63a0b594dc41366')" class="cursor-pointer" size="xs" name="open_in_new"></q-icon>
+                        </div>
+                        <div class="q-mt-md">
+                            Review all your flows and PBs in one place and organize them by objects, types.
+                            <div class="q-mt-sm">Metaforce Flow Organizer provides following core actions:</div>
+                            <ul class="q-mt-xs">
+                                <li><b :class="`text-${featuredTabColor}`">Flow Organize</b> - Sync all your flows and processes,!</li>
+                                <li><b :class="`text-${featuredTabColor}`">Flow Export</b> - Export all your flows as CSV file!</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <q-img @click="popupImageName=require('assets/images/flow-demo.jpg')" class="rounded-borders cursor-pointer" src="~assets/images/flow-demo.jpg" />
                     </div>
                 </q-tab-panel>
             </q-tab-panels>
@@ -160,6 +187,7 @@
 import { api } from 'src/boot/axios';
 import { defineComponent } from 'vue'
 import { openURL } from 'quasar'
+
 export default defineComponent({
     name: 'IndexPage',
     data () {
@@ -168,9 +196,10 @@ export default defineComponent({
                 'Organizations': 'primary',
                 'Projects': 'deep-purple-9',
                 'Deployments': 'teal',
-                'Data Manager': 'cyan-9'
+                'Data Manager': 'cyan-9',
+                'Flow Organizer': 'deep-purple-9'
             },
-            focusedFeatureTab: 'Organizations',
+            focusedFeatureTab: 'Flow Organizer',
             popupImageName: '',
 
             caseForm: { name: '', email: '', subject: '', details: '' },
@@ -183,9 +212,9 @@ export default defineComponent({
         featuredTabColor () { return this.featureTabToColor[this.focusedFeatureTab] },
         installButton () {
             let platformIs = this.$q.platform.is;
-            if (platformIs.ipad) return { icon: 'tablet_mac', label: 'Install On Your IPad' };
-            if (platformIs.win) return { icon: 'desktop_windows', label: 'Install On Your Windows' };
-            return { icon: 'laptop', label: 'Install On Your Mac' };
+            if (platformIs.ipad) return { icon: 'tablet_mac', label: 'Install On Your IPad', link: 'https://apps.apple.com/us/app/metaforce/id1643287394' };
+            if (platformIs.win) return { icon: 'desktop_windows', label: 'Install On Your Windows', link: 'https://apps.microsoft.com/store/detail/metaforce-/9N9ZD9T6RGZP' };
+            return { icon: 'laptop', label: 'Install On Your Mac', link: 'https://apps.apple.com/us/app/metaforce/id1643287394' };
         }
     },
     methods: {

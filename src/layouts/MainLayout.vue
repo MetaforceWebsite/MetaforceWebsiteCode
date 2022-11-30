@@ -10,7 +10,8 @@
                 <q-toolbar-title>
                     <router-link to="/" class="text-h5 q-mx-sm" style="color:black;text-decoration:none;">Metaforce</router-link>
                 </q-toolbar-title>
-                <q-btn class="q-px-lg" type="a" target="_blank" href="https://allen-li.notion.site/Metaforce-User-Guide-03bfa81b0cc646259c75669d76386d7a" size="md" flat icon="menu_book" label="Check User Guide"></q-btn>
+                <q-btn class="q-px-lg" type="a" href="https://blog.metaforce.ltd" size="md" flat icon="school" label="Knowledge Center"></q-btn>
+                <q-btn class="q-px-lg" type="a" target="_blank" href="https://metaforce-go.notion.site/Metaforce-User-Guide-03bfa81b0cc646259c75669d76386d7a" size="md" flat icon="menu_book" label="User Guide"></q-btn>
                 <q-btn class="q-px-lg" @click="scorllToBottom" size="md" flat icon="live_help" label="Submit A Case"></q-btn>
             </q-toolbar>
         </q-header>
