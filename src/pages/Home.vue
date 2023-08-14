@@ -4,7 +4,7 @@
             <div class="text-h2 text-bold q-mb-md">Welcome To Metaforce World</div>
             <div class="text-h6 q-ma-xl q-px-xl q-pt-md">
                 <div>Metaforce is a powerful salesforce administration and development tool <br />which helps you to manage and customize your salesforce organizations faster and easier!</div>
-                <div style="margin-top:15px;font-size:1rem;">Org Management | Apex Development | Data Process | Metadata Deployment</div>
+                <div style="margin-top:15px;font-size:1rem;">Org Management | Apex Development | Metadata Deployment | Data Migration | SOQL Explorer</div>
                 <span class="inline-block q-mt-lg" style="border-top:1px dashed white;border-bottom:1px dashed white;">Available On Mac OS, IPad, Windows</span>
             </div>
             <div class="q-mt-xl">
@@ -99,7 +99,7 @@
                     </div>
                 </q-tab-panel>
 
-                <q-tab-panel name="Data Manager" class="row q-py-xl featured-tab">
+                <q-tab-panel name="Data Operations" class="row q-py-xl featured-tab">
                     <div class="col-auto q-mr-md">
                         <q-icon color="teal" size="md" name="webhook"></q-icon>
                     </div>
@@ -110,11 +110,12 @@
                         </div>
                         <div class="q-mt-md">
                             Metaforce makes salesforce data migration to be easier! You can easily start a <a href="https://developer.salesforce.com/docs/atlas.en-us.api_asynch.meta/api_asynch/asynch_api_quickstart.htm" target="_blank">Bulk API 2.0</a> job to import/export data. We also provide an easy way to sync data between your objects directly without exporting them.
-                            <div class="q-mt-sm">Metaforce Data Manager provides following core actions:</div>
+                            <div class="q-mt-sm">Metaforce Data Operations provides following core actions:</div>
                             <ul class="q-mt-xs">
                                 <li><b :class="`text-${featuredTabColor}`">Export</b> - Export object data by few clicks!</li>
                                 <li><b :class="`text-${featuredTabColor}`">Import</b> - Insert/Update/Upsert CSV data into the object!</li>
                                 <li><b :class="`text-${featuredTabColor}`">Data Migration</b> - Sync object records from Org A to Org B directly!</li>
+                                <li><b :class="`text-${featuredTabColor}`">Hierarchical Data Migration</b> - Sync hierarchical object records from Org A to Org B!</li>
                             </ul>
                         </div>
                     </div>
@@ -136,8 +137,9 @@
                             Review all your flows and PBs in one place and organize them by objects, types.
                             <div class="q-mt-sm">Metaforce Flow Organizer provides following core actions:</div>
                             <ul class="q-mt-xs">
-                                <li><b :class="`text-${featuredTabColor}`">Flow Organize</b> - Sync all your flows and processes,!</li>
-                                <li><b :class="`text-${featuredTabColor}`">Flow Export</b> - Export all your flows as CSV file!</li>
+                                <li><b :class="`text-${featuredTabColor}`">Organize Flows</b> - Sync/Search/Filter all your flows and processes!</li>
+                                <li><b :class="`text-${featuredTabColor}`">Update Flows</b> - Open/Del/Activate/Deactivate flow versions!</li>
+                                <li><b :class="`text-${featuredTabColor}`">Export Flows</b> - Export all your flows as CSV file!</li>
                             </ul>
                         </div>
                     </div>
@@ -147,7 +149,7 @@
                 </q-tab-panel>
             </q-tab-panels>
         </div>
-
+        <q-video style="height:600px;" src="https://www.youtube.com/embed/3lvJJGbEieQ"></q-video>
         <q-parallax height="600" :speed="1" :src="require('assets/home-bg.png')" class="contact-us text-white text-center">
             <div id="submitCaseDiv" class="row q-pa-xl q-mx-xl">
                 <div class="col text-center">
@@ -196,8 +198,8 @@ export default defineComponent({
                 'Organizations': 'primary',
                 'Projects': 'deep-purple-9',
                 'Deployments': 'teal',
-                'Data Manager': 'cyan-9',
-                'Flow Organizer': 'deep-purple-9'
+                'Data Operations': 'cyan-9',
+                'Flow Organizer': 'indigo-8'
             },
             focusedFeatureTab: 'Flow Organizer',
             popupImageName: '',
