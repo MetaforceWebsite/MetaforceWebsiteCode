@@ -215,7 +215,7 @@ export default defineComponent({
         isImagePopup () { return this.popupImageName.length > 0; },
         featuredTabColor () { return this.featureTabToColor[this.focusedFeatureTab] },
         installButtons () {
-            if (!this.$q.platform.is.ipad) return [{ icon: 'tablet_mac', label: 'Install from iPad app store', link: 'https://apps.apple.com/us/app/metaforce/id1643287394' }];
+            if (this.$q.platform.is.ipad) return [{ icon: 'tablet_mac', label: 'Install from iPad app store', link: 'https://apps.apple.com/us/app/metaforce/id1643287394' }];
             if (this.$q.platform.is.win) return [
                 { icon: 'download_for_offline', label: 'Download for desktop', link: 'https://github.com/metaforce-quasar/metaforce-docs/raw/main/win-installs/Metaforce-latest.msi?download' },
                 { icon: 'desktop_windows', label: 'Install from microsoft store', link: 'https://apps.microsoft.com/store/detail/metaforce-/9N9ZD9T6RGZP' }
