@@ -7,8 +7,10 @@
                 <div style="margin-top:15px;font-size:1rem;">Org Management | Apex Development | Metadata Deployment | Data Migration | SOQL Explorer</div>
                 <span class="inline-block q-mt-lg" style="border-top:1px dashed white;border-bottom:1px dashed white;">Available On Mac OS, IPad, Windows</span>
             </div>
-            <div class="q-mt-xl">
-                <q-btn class="q-px-xl q-py-sm q-ma-md text-bold" style="background-color:rgba(2,123,227,0.8);" type="a" target="_blank" :href="installButton.link" size="md" flat :icon="installButton.icon" :label="installButton.label"></q-btn>
+            <div class="q-mt-lg">
+                <template v-for="(installButton, index) in installButtons" :key="index">
+                    <q-btn no-caps class="q-py-sm q-ma-md" style="background-color:rgba(2,123,227,0.8);" type="a" target="_blank" :href="installButton.link" size="20px" flat :icon="installButton.icon" :label="installButton.label"></q-btn>
+                </template>
             </div>
         </q-parallax>
 
@@ -212,11 +214,13 @@ export default defineComponent({
     computed: {
         isImagePopup () { return this.popupImageName.length > 0; },
         featuredTabColor () { return this.featureTabToColor[this.focusedFeatureTab] },
-        installButton () {
-            let platformIs = this.$q.platform.is;
-            if (platformIs.ipad) return { icon: 'tablet_mac', label: 'Install On Your IPad', link: 'https://apps.apple.com/us/app/metaforce/id1643287394' };
-            if (platformIs.win) return { icon: 'desktop_windows', label: 'Install On Your Windows', link: 'https://apps.microsoft.com/store/detail/metaforce-/9N9ZD9T6RGZP' };
-            return { icon: 'laptop', label: 'Install On Your Mac', link: 'https://apps.apple.com/us/app/metaforce/id1643287394' };
+        installButtons () {
+            if (!this.$q.platform.is.ipad) return [{ icon: 'tablet_mac', label: 'Install from iPad app store', link: 'https://apps.apple.com/us/app/metaforce/id1643287394' }];
+            if (this.$q.platform.is.win) return [
+                { icon: 'download_for_offline', label: 'Download for desktop', link: 'https://github.com/metaforce-quasar/metaforce-docs/raw/main/win-installs/Metaforce-latest.msi?download' },
+                { icon: 'desktop_windows', label: 'Install from microsoft store', link: 'https://apps.microsoft.com/store/detail/metaforce-/9N9ZD9T6RGZP' }
+            ];
+            return [{ icon: 'laptop_mac', label: 'Install from mac app store', link: 'https://apps.apple.com/us/app/metaforce/id1643287394' }];
         }
     },
     methods: {
