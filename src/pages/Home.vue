@@ -217,9 +217,9 @@ export default defineComponent({
         installButtons () {
             if (this.$q.platform.is.ipad) return [{ icon: 'tablet_mac', label: 'Install from iPad app store', link: 'https://apps.apple.com/us/app/metaforce/id1643287394' }];
             if (this.$q.platform.is.win) return [
-                { icon: 'desktop_windows', label: 'Install from microsoft store', link: 'https://apps.microsoft.com/store/detail/metaforce-/9N9ZD9T6RGZP' }
+                { icon: 'desktop_windows', label: 'Install from microsoft store', link: 'ms-windows-store://pdp/?ProductId=9N9ZD9T6RGZP' }
             ];
-            return [{ icon: 'laptop_mac', label: 'Install from mac app store', link: 'https://apps.apple.com/us/app/metaforce/id1643287394' }];
+            return [{ icon: 'laptop_mac', label: 'Install from mac app store', link: 'itms-apps://apps.apple.com/us/app/metaforce/id1643287394' }];
         }
     },
     methods: {
