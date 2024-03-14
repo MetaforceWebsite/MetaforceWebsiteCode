@@ -7,7 +7,10 @@ import axios from 'axios'
 // good idea to move this instance creation inside of the
 // "export default () => {}" function below (which runs individually
 // for each client)
-const api = axios.create({ baseURL: 'https://quasar-metaforce-developer-edition.ap16.force.com/services/apexrest/easymeta' })
+const api = axios.create({
+  baseURL: 'http://proxy.metaforce.ltd/services/apexrest/easymeta',
+  headers: { domain: 'https://quasar-metaforce-dev-ed.my.salesforce-sites.com' }
+})
 
 export default boot(({ app }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api

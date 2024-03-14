@@ -225,10 +225,12 @@ export default defineComponent({
     methods: {
         submitForm () {
             this.isSubmitting = true;
+
             this.$refs.caseForm.validate().then(async success => {
                 if (success) {
                     this.caseForm.origin = 'Website';
-                    this.caseId = (await api.post('/website/contactus/', this.caseForm))?.data;
+                    let result = await api.post('/website/contactus', this.caseForm);
+                    this.caseId = result?.data;
                 }
                 this.isSubmitting = false;
             }).catch(ex => {
