@@ -27,9 +27,9 @@
                         <q-icon color="primary" size="sm" name="hub"></q-icon>
                     </div>
                     <div class="col q-pr-xl">
-                        <div class="text-h5 text-primary">Manage Org Connections
-                            <q-icon :color="featuredTabColor" @click="openUrl('https://metaforce-go.notion.site/Organizations-4350afbe73f040d2b25531020b983cee')" class="cursor-pointer" size="xs" name="open_in_new"></q-icon>
-                        </div>https://metaforce-go.notion.site/
+                        <div class="text-h5 text-primary hover-underline" @click="openUrl('https://docs.metaforce.ltd/#/pages/coreFeatures/organizations')">Manage Org Connections
+                            <q-icon :color="featuredTabColor" size="xs" name="open_in_new"></q-icon>
+                        </div>
                         <div class="q-mt-md">
                             In Metaforce, you can connect and manage all your salesforce organizations via <a href="https://oauth.net/2/" target="_blank">OAuth 2.0 protocol</a>.
                             <div class="q-mt-sm">Once connected, you can perform handy actions below:</div>
@@ -44,7 +44,7 @@
                         </div>
                     </div>
                     <div class="col">
-                        <q-img @click="popupImageName=require('assets/images/orgs-demo.jpg')" class="rounded-borders cursor-pointer" src="~assets/images/orgs-demo.jpg" />
+                        <q-img @click="popupImageName=require('assets/images/org-demo.png')" class="rounded-borders cursor-pointer" src="~assets/images/org-demo.png" />
                     </div>
                 </q-tab-panel>
 
@@ -53,9 +53,9 @@
                         <q-icon color="deep-purple-9" size="sm" name="handyman"></q-icon>
                     </div>
                     <div class="col q-pr-sm">
-                        <div class="text-h5 text-deep-purple-9">
+                        <div class="text-h5 text-deep-purple-9 hover-underline" @click="openUrl('https://docs.metaforce.ltd/#/pages/coreFeatures/projects')">
                             Build Projects To Start SFDC Dev
-                            <q-icon :color="featuredTabColor" @click="openUrl('https://metaforce-go.notion.site/Projects-be46c2c8c1bd4942a99224cb173fad96')" class="cursor-pointer" size="xs" name="open_in_new"></q-icon>
+                            <q-icon :color="featuredTabColor" size="xs" name="open_in_new"></q-icon>
                         </div>
                         <div class="q-mt-md">
                             In Metaforce, you can create a project to start your salesforce development just by few clicks! <br />Metaforce provides its own code editor to view and update your apex/page/aura/lwc code directly. It's <span class="text-bold">FASTER AND EASIER</span> than sfdx tool in visual studio code!
@@ -80,9 +80,9 @@
                         <q-icon color="teal" size="md" name="rocket"></q-icon>
                     </div>
                     <div class="col q-pr-sm">
-                        <div class="text-h5 text-teal">
+                        <div class="text-h5 text-teal hover-underline" @click="openUrl('https://docs.metaforce.ltd/#/pages/coreFeatures/deployments')">
                             Deploy Metadata Changes In Real Time
-                            <q-icon :color="featuredTabColor" @click="openUrl('https://metaforce-go.notion.site/Deployments-fbda9eed87bd43a4a68c1146d6b4f840')" class="cursor-pointer" size="xs" name="open_in_new"></q-icon>
+                            <q-icon :color="featuredTabColor" size="xs" name="open_in_new"></q-icon>
                         </div>
                         <div class="q-mt-md">
                             Metaforce can perform a quick salesforce deployment to any target org by few clicks! And you can aslo view difference between source org and target org before the deployment starts. It's exciting, right?
@@ -106,9 +106,9 @@
                         <q-icon color="teal" size="md" name="webhook"></q-icon>
                     </div>
                     <div class="col q-pr-sm">
-                        <div class="text-h5 text-teal">
+                        <div class="text-h5 text-teal hover-underline" @click="openUrl('https://docs.metaforce.ltd/#/pages/coreFeatures/dataOperations')">
                             Simplify Your Data Migration
-                            <q-icon :color="featuredTabColor" @click="openUrl('https://metaforce-go.notion.site/Data-Manager-c397c2ba17a94e08a63a0b594dc41366')" class="cursor-pointer" size="xs" name="open_in_new"></q-icon>
+                            <q-icon :color="featuredTabColor" size="xs" name="open_in_new"></q-icon>
                         </div>
                         <div class="q-mt-md">
                             Metaforce makes salesforce data migration to be easier! You can easily start a <a href="https://developer.salesforce.com/docs/atlas.en-us.api_asynch.meta/api_asynch/asynch_api_quickstart.htm" target="_blank">Bulk API 2.0</a> job to import/export data. We also provide an easy way to sync data between your objects directly without exporting them.
@@ -131,9 +131,9 @@
                         <q-icon color="deep-purple-9" size="md" name="account_tree"></q-icon>
                     </div>
                     <div class="col q-pr-sm">
-                        <div class="text-h5 text-deep-purple-9">
-                            Organize all your flows and PBs
-                            <q-icon :color="featuredTabColor" @click="openUrl('https://metaforce-go.notion.site/Data-Manager-c397c2ba17a94e08a63a0b594dc41366')" class="cursor-pointer" size="xs" name="open_in_new"></q-icon>
+                        <div class="text-h5 text-deep-purple-9 hover-underline" @click="openUrl('https://docs.metaforce.ltd/#/pages/coreFeatures/flowOrganizer')">
+                            Manage all your flow versions
+                            <q-icon :color="featuredTabColor" size="xs" name="open_in_new"></q-icon>
                         </div>
                         <div class="q-mt-md">
                             Review all your flows and PBs in one place and organize them by objects, types.

@@ -2,3 +2,8 @@
     font-family: sora;
     src: url(./Sora-VariableFont_wght.ttf);
 }
+
+.hover-underline:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
