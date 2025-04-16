@@ -10,9 +10,10 @@
                 <q-toolbar-title>
                     <router-link to="/" class="text-h5 q-mx-sm" style="color:black;text-decoration:none;">Metaforce</router-link>
                 </q-toolbar-title>
+                <q-btn class="q-px-lg" to="/pricing" size="md" flat icon="shopping_cart" label="Pricing"></q-btn>
                 <q-btn class="q-px-lg" type="a" href="https://docs.metaforce.ltd" size="md" flat icon="school" label="User Guide"></q-btn>
                 <q-btn class="q-px-lg" @click="scorllToBottom" size="md" flat icon="live_help" label="Submit A Case"></q-btn>
-                <q-btn class="q-px-lg" to="/privacy" size="md" flat icon="privacy_tip" label="Privacy Policy"></q-btn>
+                <!-- <q-btn class="q-px-lg" to="/privacy" size="md" flat icon="privacy_tip" label="Privacy Policy"></q-btn> -->
             </q-toolbar>
         </q-header>
 
