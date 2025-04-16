@@ -1,6 +1,6 @@
 <template>
     <q-page>
-        <q-parallax style="height:700px" :speed="1" :src="require('assets/home-bg.png')" class="text-white text-center">
+        <q-parallax style="height:600px" :speed="1" :src="require('assets/home-bg.png')" class="text-white text-center">
             <div class="text-h2 text-bold q-mb-md">Welcome To Metaforce World</div>
             <div class="text-h6 q-ma-xl q-px-xl q-pt-md">
                 <div>Metaforce is a powerful salesforce administration and development tool <br />which helps you to manage and customize your salesforce organizations faster and easier!</div>
@@ -61,11 +61,12 @@
                             In Metaforce, you can create a project to start your salesforce development just by few clicks! <br />Metaforce provides its own code editor to view and update your apex/page/aura/lwc code directly. It's <span class="text-bold">FASTER AND EASIER</span> than sfdx tool in visual studio code!
                             <div class="q-mt-sm">Metaforce Project provides following core actions:</div>
                             <ul class="q-mt-xs">
+                                <li><b :class="`text-${featuredTabColor}`">AI Actions on Apex</b> - Optimize/Document your apex code via pre-defined AI actions.</li>
                                 <li><b :class="`text-${featuredTabColor}`">Save To Salesforce</b> - Save metadata to salesforce org, like apex code, vf page, aura, lwc, etc.</li>
                                 <li><b :class="`text-${featuredTabColor}`">Refresh From Salesforce</b> - Refresh and Get latest metadata from salesforce org.</li>
                                 <li><b :class="`text-${featuredTabColor}`">Run Apex Test</b> - You can run apex test class and check test result by one click!</li>
                                 <li><b :class="`text-${featuredTabColor}`">View Test Coverage</b> - View the code coverage for apex class you tested.</li>
-                                <li><b :class="`text-${featuredTabColor}`">View Diff</b> - Show a code diff view between source org and target org. </li>
+                                <li><b :class="`text-${featuredTabColor}`">Diff Metadata</b> - Compare the apex/visualforce/flow differences between a source org and a target org. </li>
                                 <li><b :class="`text-${featuredTabColor}`">View Dependencies</b> - Show all references for selected component.</li>
                             </ul>
                         </div>
@@ -117,7 +118,7 @@
                                 <li><b :class="`text-${featuredTabColor}`">Export</b> - Export object data by few clicks!</li>
                                 <li><b :class="`text-${featuredTabColor}`">Import</b> - Insert/Update/Upsert CSV data into the object!</li>
                                 <li><b :class="`text-${featuredTabColor}`">Data Migration</b> - Sync object records from Org A to Org B directly!</li>
-                                <li><b :class="`text-${featuredTabColor}`">Hierarchical Data Migration</b> - Sync hierarchical object records from Org A to Org B!</li>
+                                <!-- <li><b :class="`text-${featuredTabColor}`">Hierarchical Data Migration</b> - Sync hierarchical object records from Org A to Org B!</li> -->
                             </ul>
                         </div>
                     </div>
@@ -140,7 +141,9 @@
                             <div class="q-mt-sm">Metaforce Flow Organizer provides following core actions:</div>
                             <ul class="q-mt-xs">
                                 <li><b :class="`text-${featuredTabColor}`">Organize Flows</b> - Sync/Search/Filter all your flows and processes!</li>
-                                <li><b :class="`text-${featuredTabColor}`">Update Flows</b> - Open/Del/Activate/Deactivate flow versions!</li>
+                                <li><b :class="`text-${featuredTabColor}`">Manage Flows</b> - Open/Del/Activate/Deactivate flow versions!</li>
+                                <li><b :class="`text-${featuredTabColor}`">Diff/Analyze Flow Version</b> - Compare and optmize your flows!</li>
+                                <li><b :class="`text-${featuredTabColor}`">Monitor Flow Interviews</b> - View failed flow interviews in real-time!</li>
                                 <li><b :class="`text-${featuredTabColor}`">Export Flows</b> - Export all your flows as CSV file!</li>
                             </ul>
                         </div>
