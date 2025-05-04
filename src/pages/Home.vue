@@ -155,32 +155,6 @@
             </q-tab-panels>
         </div>
         <q-video style="height:600px;" src="https://www.youtube.com/embed/dmM-vb7pYpg"></q-video>
-        <q-parallax height="600" :speed="1" :src="require('assets/home-bg.png')" class="contact-us text-white text-center">
-            <div id="submitCaseDiv" class="row q-pa-xl q-mx-xl">
-                <div class="col text-center">
-                    <div class="text-h4 text-bold q-pb-md">Submit A Case</div>
-                    <q-form v-if="!caseId" ref="caseForm" @submit="submitForm">
-                        <q-card flat class="q-pa-md" style="background-color:rgba(0,0,0,0.1)">
-                            <q-input v-model="caseForm.name" label-color="white" color="white" label="Your Name" lazy-rules :rules="[ val => val && val.length > 0 || 'Required']"></q-input>
-                            <q-input v-model="caseForm.email" type="email" label-color="white" color="white" label="Email Address" lazy-rules :rules="[ val => val && val.length > 0 || 'Required']"></q-input>
-                            <q-input v-model="caseForm.subject" label-color="white" color="white" label="Case Subject" lazy-rules :rules="[ val => val && val.length > 0 || 'Required']"></q-input>
-                            <q-input v-model="caseForm.details" type="textarea" autogrow label-color="white" color="white" label="Case Details" lazy-rules :rules="[ val => val.trim() && val.length > 0 || 'Required']"></q-input>
-                            <div class="q-mt-sm">
-                                <q-btn :loading="isSubmitting" type="submit" class="bg-primary" flat label="Submit"></q-btn>
-                            </div>
-                        </q-card>
-                    </q-form>
-                    <div v-else class="text-h6 q-mt-lg">
-                        <div class="q-mb-sm">Congrats!</div>
-                        <div>Your case has been submitted successfully. We will get back to you ASAP.</div>
-                        <div>Case Number: {{caseId}}</div>
-                    </div>
-                </div>
-                <div class="col text-center q-ml-xl q-mt-xl">
-                    <q-img style="width:300px;" class="rounded-borders cursor-pointer" src="~assets/contact-us.png" />
-                </div>
-            </div>
-        </q-parallax>
 
         <q-dialog @hide="popupImageName=''" :model-value="isImagePopup">
             <q-card style="max-width:none;width:80vw;">
@@ -191,7 +165,6 @@
 </template>
 
 <script>
-import { api } from 'src/boot/axios';
 import { defineComponent } from 'vue'
 import { openURL } from 'quasar'
 
@@ -208,10 +181,6 @@ export default defineComponent({
             },
             focusedFeatureTab: 'Organizations',
             popupImageName: '',
-
-            caseForm: { name: '', email: '', subject: '', details: '' },
-            isSubmitting: false,
-            caseId: '',
         }
     },
     computed: {
@@ -226,20 +195,6 @@ export default defineComponent({
         }
     },
     methods: {
-        submitForm () {
-            this.isSubmitting = true;
-
-            this.$refs.caseForm.validate().then(async success => {
-                if (success) {
-                    this.caseForm.origin = 'Website';
-                    let result = await api.post('/website/contactus', this.caseForm);
-                    this.caseId = result?.data;
-                }
-                this.isSubmitting = false;
-            }).catch(ex => {
-                this.isSubmitting = false;
-            })
-        },
         openUrl (url) { openURL(url); }
     }
 })
