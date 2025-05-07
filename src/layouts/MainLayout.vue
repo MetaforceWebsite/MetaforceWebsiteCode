@@ -14,7 +14,7 @@
                 <q-btn class="q-px-md" to="/pricing" size="md" flat icon="shopping_cart" label="Pricing" no-caps></q-btn>
                 <q-btn class="q-px-md" to="/guide" size="md" flat icon="school" label="Docs" no-caps></q-btn>
 
-                <q-btn-dropdown v-if="isLoggedIn || isSigning" :loading="isSigning" :label="customerName" class="q-px-md" size="md" icon="account_circle" no-caps flat>
+                <q-btn-dropdown v-if="isLoggedIn || isLoadingCustomer" :loading="isLoadingCustomer" :label="customerName" class="q-px-md" size="md" icon="account_circle" no-caps flat>
                     <template v-slot:loading>
                         <q-spinner-bars size="xs" color="primary"></q-spinner-bars>
                     </template>
@@ -33,7 +33,7 @@
                         </q-item>
                     </q-list>
                 </q-btn-dropdown>
-                <q-btn v-else @click="$refs.loginPopupCmp.show()" class="q-px-md" size="md" flat icon="login" label="Login"></q-btn>
+                <q-btn v-else @click="isShowLogin=true" class="q-px-md" size="md" flat icon="login" label="Login"></q-btn>
             </q-toolbar>
         </q-header>
 
@@ -50,24 +50,28 @@
                 </q-toolbar>
             </div>
         </q-footer>
-
     </q-layout>
-    <login-popup ref="loginPopupCmp" @onLogin="initializeCustomer"></login-popup>
+    <q-dialog v-model="isShowLogin">
+        <q-card style="width:100%;">
+            <login-form @onLoginSuccess="loginSuccess"></login-form>
+        </q-card>
+    </q-dialog>
 </template>
 
 <script>
-import loginPopup from 'src/components/loginPopup.vue';
+import loginForm from 'src/components/loginForm.vue';
 
 import { METAFORCE_SERVICE_URL_CUSTOMER } from 'src/common/constants';
 import { get } from 'src/common/request';
 import { pageStorage } from 'src/common/utils';
 
 export default {
-    components: { loginPopup },
+    components: { loginForm },
     data () {
         return {
             customer: null,
-            isSigning: false,
+            isLoadingCustomer: false,
+            isShowLogin: false,
         }
     },
     computed: {
@@ -79,7 +83,7 @@ export default {
             let loginToken = pageStorage.getLoginToken();
             if (loginToken) {
                 try {
-                    this.isSigning = true;
+                    this.isLoadingCustomer = true;
                     let customer = await get(`${METAFORCE_SERVICE_URL_CUSTOMER}?token=${loginToken}`);
                     if (customer.Id) {
                         this.customer = customer;
@@ -92,9 +96,13 @@ export default {
                     this.customer = null;
                     pageStorage.clearLoginCache();
                 } finally {
-                    this.isSigning = false;
+                    this.isLoadingCustomer = false;
                 }
             }
+        },
+        loginSuccess ({ customer }) {
+            this.isShowLogin = false;
+            this.customer = customer;
         },
         signOut () {
             pageStorage.clearLoginCache();

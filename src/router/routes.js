@@ -11,6 +11,14 @@ const routes = [
             { path: 'privacy', component: () => import('src/pages/PrivacyPolicy.vue') }
         ]
     },
+    {
+        path: '/appLogin',
+        component: () => import("src/pages/AppLogin.vue"),
+    },
+    {
+        path: '/appPricing',
+        component: () => import("src/pages/AppPricing.vue"),
+    },
 
     // Always leave this as last one,
     // but you can also remove it

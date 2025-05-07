@@ -7,7 +7,6 @@ const METAFORCE_SERVICE_URL_CUSTOMER_RELATED_LIST = "/metaforce/customer-related
 
 const METAFORCE_PADDLE_URL_SUBSCRIPTION_CANCEL = "/paddle/subscription/cancel";
 
-
 export {
 
     METAFORCE_SERVICE_URL_REQUEST_CODE,

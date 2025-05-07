@@ -1,54 +1,51 @@
 <template>
-    <div class="q-ma-xl">
-        <q-list style="margin:20px 15%;">
-            <div class="q-my-lg text-center">
-                <q-item-label class="text-h4">Metaforce Subscriptions</q-item-label>
-            </div>
-            <q-separator></q-separator>
+    <div class="q-py-lg text-center bg-primary text-white">
+        <q-item-label class="text-h4">Metaforce Subscriptions</q-item-label>
+    </div>
+    <q-separator></q-separator>
+    <q-list class="q-mx-xl q-mt-md">
+        <q-item class="q-pl-sm">
+            <q-item-section class="text-body1" style="font-size:25px;">
+                <q-item-label>Choose a subscription plan</q-item-label>
+                <q-item-label caption>During the free trial or the subscription, you can cancel the subscription at any time.</q-item-label>
+            </q-item-section>
+        </q-item>
 
-            <q-item class="q-pl-none">
-                <q-item-section class="text-body1" style="font-size:20px;">
-                    <q-item-label>Choose a subscription plan</q-item-label>
-                    <q-item-label caption>During the free trial or the subscription, you can cancel the subscription at any time.</q-item-label>
+        <div v-if="isLoadingPrices" class="text-center q-my-xl">
+            <q-spinner-bars size="md" color="primary"></q-spinner-bars>
+            <div class="q-mt-md">Loading Subscription Plans ...</div>
+        </div>
+        <template v-else>
+            <q-list bordered separator padding>
+                <q-item v-for="(price, index) in paddlePrices" :key="index" tag="label" :class="price.id == selectedPriceId ? 'text-primary text-bold':''" clickable>
+                    <q-item-section avatar>
+                        <q-radio v-model="selectedPriceId" :val="price.id"></q-radio>
+                    </q-item-section>
+                    <q-item-section>
+                        <q-item-label>{{price.name}}</q-item-label>
+                        <q-item-label :class="price.id == selectedPriceId ? 'text-primary':''" caption>{{price.description}}</q-item-label>
+                    </q-item-section>
+                    <q-item-section avatar>
+                        <q-item-label>{{price.total}}</q-item-label>
+                    </q-item-section>
+                </q-item>
+            </q-list>
+            <q-item class="q-pa-none q-my-md">
+                <q-item-section>
+                    <q-btn :disabled="!isPaddleInitialized" @click="subscribeNow" label="Subscribe Now" color="white" class="bg-positive" style="min-height:50px;" flat stretch></q-btn>
                 </q-item-section>
             </q-item>
-            <div v-if="isLoadingPrices" class="text-center q-my-xl">
-                <q-spinner-bars size="md" color="primary"></q-spinner-bars>
-                <div class="q-mt-md">Loading Subscription Plans ...</div>
-            </div>
-            <template v-else>
-                <q-list bordered separator padding>
-                    <q-item v-for="(price, index) in paddlePrices" :key="index" tag="label" :class="price.id == selectedPriceId ? 'text-primary text-bold':''" clickable>
-                        <q-item-section avatar>
-                            <q-radio v-model="selectedPriceId" :val="price.id"></q-radio>
-                        </q-item-section>
-                        <q-item-section>
-                            <q-item-label>{{price.name}}</q-item-label>
-                            <q-item-label :class="price.id == selectedPriceId ? 'text-primary':''" caption>{{price.description}}</q-item-label>
-                        </q-item-section>
-                        <q-item-section avatar>
-                            <q-item-label>{{price.total}}</q-item-label>
-                        </q-item-section>
-                    </q-item>
-                </q-list>
-                <q-item class="q-pa-none q-mt-md">
-                    <q-item-section>
-                        <q-btn :disabled="!isPaddleInitialized" @click="subscribeNow" label="Subscribe Now" color="white" class="bg-positive" style="min-height:50px;" flat stretch></q-btn>
-                    </q-item-section>
-                </q-item>
-                <q-item class="q-pa-none q-mt-md">
-                    <q-item-section>
-                        <q-btn label="Back" style="min-height:50px;" @click="goBack" flat stretch></q-btn>
-                    </q-item-section>
-                </q-item>
-            </template>
-        </q-list>
-    </div>
+            <q-item v-if="!isInApp" class="q-pa-none q-mt-md">
+                <q-item-section>
+                    <q-btn label="Back" style="min-height:50px;" @click="goBack" flat stretch></q-btn>
+                </q-item-section>
+            </q-item>
+        </template>
+    </q-list>
 </template>
 
 <script>
 import { initializePaddle } from '@paddle/paddle-js';
-import { testData } from './testData'
 import { notifyError } from 'src/common/notify';
 import { pageStorage } from 'src/common/utils';
 
@@ -81,6 +78,9 @@ export default {
             selectedPriceId: SANDBOX_MONTHLY_PRICE,
             paddlePrices: []
         }
+    },
+    props: {
+        isInApp: { type: Boolean, default: false },
     },
     computed: {
         isPaddleInitialized () { return this.paddle?.Initialized; },
