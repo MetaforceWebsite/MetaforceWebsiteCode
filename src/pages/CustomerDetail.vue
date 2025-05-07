@@ -156,6 +156,7 @@ export default {
     components: { newCasePopup, CaseDetailPopup },
     data () {
         return {
+            loginToken: null,
             customer: {},
             myCases: [],
             mySubscriptions: [],
@@ -175,8 +176,7 @@ export default {
             let isValid = await this.$refs.formCmp.validate();
             if (isValid) {
                 this.isAccountUpdating = true;
-                let result = await put(METAFORCE_SERVICE_URL_CUSTOMER, {
-                    token: this.customer.easymeta__Login_Token__c,
+                let result = await put(`${METAFORCE_SERVICE_URL_CUSTOMER}?token=${this.loginToken}`, {
                     firstname: this.customer.easymeta__FirstName__c,
                     lastname: this.customer.easymeta__LastName__c
                 });
@@ -192,7 +192,7 @@ export default {
         },
         async loadCustomerRelatedList () {
             this.isRelatedListLoading = true;
-            let result = await get(`${METAFORCE_SERVICE_URL_CUSTOMER_RELATED_LIST}?token=${this.customer.easymeta__Login_Token__c}`)
+            let result = await get(`${METAFORCE_SERVICE_URL_CUSTOMER_RELATED_LIST}?token=${this.loginToken}`)
             if (result.isSuccess) {
                 this.myCases = result.customer.easymeta__Cases__r?.records || [];
                 this.mySubscriptions = result.customer.easymeta__PaddleSubscriptions__r?.records || [];
@@ -222,10 +222,12 @@ export default {
             this.$refs.caseDetailCmp.show(caseRecord);
         }
     },
-    mounted () {
+    async mounted () {
+        this.loginToken = pageStorage.getLoginToken();
         this.customer = pageStorage.getCustomer() || {};
-        if (this.customer.easymeta__Login_Token__c) {
-            this.loadCustomerRelatedList();
+
+        if (this.loginToken) {
+            await this.loadCustomerRelatedList();
         } else {
             this.$router.push('/');
         }

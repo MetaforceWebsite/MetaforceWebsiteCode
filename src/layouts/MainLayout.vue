@@ -52,7 +52,7 @@
         </q-footer>
 
     </q-layout>
-    <login-popup ref="loginPopupCmp" @onLogin="verifyCustomer"></login-popup>
+    <login-popup ref="loginPopupCmp" @onLogin="initializeCustomer"></login-popup>
 </template>
 
 <script>
@@ -75,9 +75,8 @@ export default {
         isLoggedIn () { return this.customer?.Id?.length > 0; },
     },
     methods: {
-        async verifyCustomer () {
-            let cachedCustomer = pageStorage.getCustomer() || {};
-            let loginToken = cachedCustomer?.easymeta__Login_Token__c;
+        async initializeCustomer () {
+            let loginToken = pageStorage.getLoginToken();
             if (loginToken) {
                 try {
                     this.isSigning = true;
@@ -104,7 +103,7 @@ export default {
         },
     },
     async mounted () {
-        this.verifyCustomer();
+        this.initializeCustomer();
     }
 }
 </script>

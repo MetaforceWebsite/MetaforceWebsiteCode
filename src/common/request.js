@@ -1,10 +1,9 @@
 import axios from "axios";
-import { METAFORCE_SERVICE_BASE_URL, METAFORCE_SERVICE_DOMAIN } from "./constants";
 
-axios.defaults.baseURL = METAFORCE_SERVICE_BASE_URL;
+axios.defaults.baseURL = "https://quasar-metaforce-dev-ed.my.salesforce-sites.com/services/apexrest/easymeta";
 axios.defaults.timeout = 600000;
 axios.defaults.headers.post["Content-Type"] = "application/json;charset=UTF-8";
-axios.defaults.headers.domain = METAFORCE_SERVICE_DOMAIN;
+axios.defaults.headers.domain = "https://quasar-metaforce-dev-ed.my.salesforce-sites.com";
 
 export const request = ((config) => {
     return axios

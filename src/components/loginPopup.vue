@@ -73,7 +73,7 @@ export default {
             countDownTimer: null,
             isSubmitting: false,
 
-            form: { firstname: "", lastname: "", email: "", verificationCode: "" },
+            form: { firstname: "", lastname: "", email: "allen@gmail.com", verificationCode: "" },
             statusOfRequestCode: "Draft", //Draft, Sending, Sent
 
             nameRules: [val => (val && val.length > 0) || 'Required'],
@@ -144,7 +144,7 @@ export default {
                     verificationCode: this.form.verificationCode
                 });
                 if (result.isSuccess) {
-                    pageStorage.setCustomer(result.customer);
+                    pageStorage.setLoginToken(encodeURIComponent(result.message));
                     this.$emit('onLogin');
                     this.isShow = false;
                 } else {
