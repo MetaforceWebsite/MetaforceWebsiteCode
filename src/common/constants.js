@@ -1,7 +1,7 @@
 const METAFORCE_SERVICE_DOMAIN = "https://quasar-metaforce-dev-ed.my.salesforce-sites.com";
-const METAFORCE_SERVICE_BASE_URL = `http://proxy.metaforce.ltd/services/apexrest/easymeta`;
+const METAFORCE_SERVICE_BASE_URL = "http://proxy.metaforce.ltd/services/apexrest/easymeta";
 
-const METAFORCE_SERVICE_URL_REQUEST_CODE = "/metaforce/verification-code/request";
+const METAFORCE_SERVICE_URL_REQUEST_CODE = "/metaforce/verification-code/request/";
 const METAFORCE_SERVICE_URL_VERIFY_CODE = "/metaforce/verification-code/verify";
 
 const METAFORCE_SERVICE_URL_CUSTOMER = "/metaforce/customer";
