@@ -1,6 +1,6 @@
 <template>
     <q-page>
-        <q-parallax style="height:600px" :speed="1" :src="require('assets/home-bg.png')" class="text-white text-center">
+        <q-parallax style="height:600px" :speed="1" src="~assets/home-bg.png" class="text-white text-center">
             <div class="text-h2 text-bold q-mb-md">Welcome To Metaforce World</div>
             <div class="text-h6 q-ma-xl q-px-xl q-pt-md">
                 <div>Metaforce is a powerful salesforce administration and development tool <br />which helps you to manage and customize your salesforce organizations faster and easier!</div>

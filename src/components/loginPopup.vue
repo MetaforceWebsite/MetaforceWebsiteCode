@@ -73,7 +73,7 @@ export default {
             countDownTimer: null,
             isSubmitting: false,
 
-            form: { firstname: "", lastname: "", email: "allen@gmail.com", verificationCode: "" },
+            form: { firstname: "", lastname: "", email: "", verificationCode: "" },
             statusOfRequestCode: "Draft", //Draft, Sending, Sent
 
             nameRules: [val => (val && val.length > 0) || 'Required'],

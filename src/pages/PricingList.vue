@@ -2,13 +2,14 @@
     <div class="q-ma-xl">
         <q-list style="margin:20px 15%;">
             <div class="q-my-lg text-center">
-                <q-item-label class="text-h5">Metaforce Subscriptions</q-item-label>
+                <q-item-label class="text-h4">Metaforce Subscriptions</q-item-label>
             </div>
             <q-separator></q-separator>
 
-            <q-item>
-                <q-item-section class="text-h6">
+            <q-item class="q-pl-none">
+                <q-item-section class="text-body1" style="font-size:20px;">
                     <q-item-label>Choose a subscription plan</q-item-label>
+                    <q-item-label caption>During the free trial or the subscription, you can cancel the subscription at any time.</q-item-label>
                 </q-item-section>
             </q-item>
             <div v-if="isLoadingPrices" class="text-center q-my-xl">
