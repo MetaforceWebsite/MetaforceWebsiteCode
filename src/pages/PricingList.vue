@@ -79,17 +79,22 @@ const SANDBOX_HALFYEAR_PRICE = 'pri_01jta252eyxyggvjnpehsbytgf';
 const SANDBOX_YEARLY_PRICE = 'pri_01jta26588t1nab896hrezmrtn';
 const SANDBOX_ONE_TIME_PRICE = 'pri_01jta2a2c2b9cadz106hr096cw';
 
+const PROD_CLIENT_API_TOKEN = 'live_d4d9aa787e98046fa2cddeaa266';
+const PROD_MONTHLY_PRICE = 'pri_01jtqz2p1q9bxnzgkqng50fehb';
+
 const PRICE_REQUESTS = {
     items: [
-        { quantity: 1, priceId: SANDBOX_MONTHLY_PRICE },
+        /* { quantity: 1, priceId: SANDBOX_MONTHLY_PRICE },
         { quantity: 1, priceId: SANDBOX_QUARTERLY_PRICE },
         { quantity: 1, priceId: SANDBOX_HALFYEAR_PRICE },
         { quantity: 1, priceId: SANDBOX_YEARLY_PRICE },
-        { quantity: 1, priceId: SANDBOX_ONE_TIME_PRICE },
-    ],
+        { quantity: 1, priceId: SANDBOX_ONE_TIME_PRICE }, */
+
+        { quantity: 1, priceId: PROD_MONTHLY_PRICE },
+    ]/* ,
     address: {
         countryCode: 'US'
-    }
+    } */
 };
 
 export default {
@@ -136,8 +141,8 @@ export default {
             try {
                 this.isPricesLoading = true;
                 this.paddle = await initializePaddle({
-                    environment: "sandbox",
-                    token: SANDBOX_CLIENT_API_TOKEN,
+                    environment: "production",
+                    token: PROD_CLIENT_API_TOKEN,
                     checkout: {
                         settings: {
                             theme: "light",
