@@ -14,7 +14,7 @@ export default {
     },
     methods: {
         loginSuccess (data) {
-            window.parent.postMessage(data, "*");
+            window.parent.postMessage({ type: 'login_credential', data }, "*");
         },
     }
 }

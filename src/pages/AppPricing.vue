@@ -1,6 +1,6 @@
 <template>
-    <div class="q-pb-xs">
-        <pricing-list isInApp></pricing-list>
+    <div v-if="token" class="q-pb-xs">
+        <pricing-list :token="token" @onCheckoutVerified="onCheckoutVerified" isInApp></pricing-list>
     </div>
 </template>
 
@@ -10,12 +10,16 @@ export default {
     components: { PricingList },
     data () {
         return {
+            token: null
         }
     },
     methods: {
-        loginSuccess (data) {
-            window.parent.postMessage(data, "*");
+        onCheckoutVerified (customer) {
+            window.parent.postMessage({ type: 'checkout.completed', customer }, "*");
         },
+    },
+    mounted () {
+        this.token = this.$route.params.token;
     }
 }
 </script>

@@ -69,6 +69,7 @@ export default {
     components: { loginForm },
     data () {
         return {
+            loginToken: null,
             customer: null,
             isLoadingCustomer: false,
             isShowLogin: false,
@@ -80,25 +81,23 @@ export default {
     },
     methods: {
         async initializeCustomer () {
-            let loginToken = pageStorage.getLoginToken();
-            if (loginToken) {
-                try {
-                    this.isLoadingCustomer = true;
-                    let customer = await get(`${METAFORCE_SERVICE_URL_CUSTOMER}?token=${loginToken}`);
-                    if (customer.Id) {
-                        this.customer = customer;
-                        pageStorage.setCustomer(customer);
-                    } else {
-                        this.customer = null;
-                        pageStorage.clearLoginCache();
-                    }
-                } catch (ex) {
+            try {
+                this.isLoadingCustomer = true;
+                let customer = await get(`${METAFORCE_SERVICE_URL_CUSTOMER}?token=${this.loginToken}`);
+                if (customer.Id) {
+                    this.customer = customer;
+                    pageStorage.setCustomer(customer);
+                } else {
                     this.customer = null;
                     pageStorage.clearLoginCache();
-                } finally {
-                    this.isLoadingCustomer = false;
                 }
+            } catch (ex) {
+                this.customer = null;
+                pageStorage.clearLoginCache();
+            } finally {
+                this.isLoadingCustomer = false;
             }
+
         },
         loginSuccess ({ customer }) {
             this.isShowLogin = false;
@@ -111,7 +110,10 @@ export default {
         },
     },
     async mounted () {
-        this.initializeCustomer();
+        this.loginToken = pageStorage.getLoginToken();
+        if (this.loginToken) {
+            this.initializeCustomer();
+        }
     }
 }
 </script>

@@ -7,5 +7,12 @@ export const pageStorage = {
     getLoginToken () { return LocalStorage.getItem('token'); },
     setLoginToken (token) { return LocalStorage.set('token', token); },
 
-    clearLoginCache () { localStorage.clear(); },
+    clearLoginCache () {
+        LocalStorage.remove('customer');
+        LocalStorage.remove('token');
+    },
+}
+
+export async function suspend (ms = 3000) {
+    await new Promise(resolve => setTimeout(resolve, ms));
 }

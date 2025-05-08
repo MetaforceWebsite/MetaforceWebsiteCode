@@ -142,11 +142,10 @@ export default {
                     verificationCode: this.form.verificationCode
                 });
                 if (result.isSuccess) {
-                    let token = encodeURIComponent(result.message);
-                    pageStorage.setLoginToken(token);
+                    pageStorage.setLoginToken(result.message);
                     pageStorage.setCustomer(result.customer);
 
-                    this.$emit('onLoginSuccess', { token, customer: result.customer });
+                    this.$emit('onLoginSuccess', { token: result.message, customer: result.customer });
                 } else {
                     notifyError(result.message);
                 }

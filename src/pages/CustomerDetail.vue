@@ -28,7 +28,7 @@
             <div class="col-6  q-pa-sm">
                 <q-card>
                     <q-toolbar class="bg-primary text-white">
-                        <q-icon name="help_center" color="white" size="md" />
+                        <q-icon name="contact_support" color="white" size="md" />
                         <q-toolbar-title>My Cases</q-toolbar-title>
                         <q-btn @click="$refs.newCasePopupCmp.show()" icon="add_circle_outline" class="bg-white text-primary" dense no-caps></q-btn>
                     </q-toolbar>
@@ -181,8 +181,7 @@ export default {
                     lastname: this.customer.easymeta__LastName__c
                 });
                 if (result.isSuccess) {
-                    this.customer = result.customer;
-                    pageStorage.setCustomer(result.customer);
+                    pageStorage.setCustomer(this.customer);
                     notifyOk('Updated successfully.');
                 } else {
                     notifyError(result.message);
@@ -223,6 +222,12 @@ export default {
         }
     },
     async mounted () {
+        let appToken = this.$route.query.token;
+        if (appToken?.length > 30) {
+            this.loginToken = appToken;
+            pageStorage.setLoginToken(appToken);
+        }
+
         this.loginToken = pageStorage.getLoginToken();
         this.customer = pageStorage.getCustomer() || {};
 
