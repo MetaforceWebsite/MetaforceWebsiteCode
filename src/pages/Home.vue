@@ -198,7 +198,7 @@ export default defineComponent({
         openUrl (url) { openURL(url); }
     },
     mounted () {
-        console.log('???? home')
+
     }
 })
 </script>

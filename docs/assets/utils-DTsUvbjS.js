@@ -1,1 +1,0 @@
-import{aX as e}from"./index-YLQE3zk4.js";const n={getCustomer(){return e.getItem("customer")},setCustomer(t){return e.set("customer",t)},getLoginToken(){return e.getItem("token")},setLoginToken(t){return e.set("token",t)},clearLoginCache(){e.remove("customer"),e.remove("token")}};async function s(t=3e3){await new Promise(o=>setTimeout(o,t))}export{n as p,s};
