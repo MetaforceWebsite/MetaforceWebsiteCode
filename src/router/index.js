@@ -14,7 +14,6 @@ import { useCustomerStore } from 'src/stores/customer'
  */
 
 export default route(function (/* { store, ssrContext } */) {
-    console.log(process.env.SERVER, process.env.VUE_ROUTER_MODE)
     const createHistory = process.env.SERVER
         ? createMemoryHistory
         : (process.env.VUE_ROUTER_MODE === 'history' ? createWebHistory : createWebHashHistory)

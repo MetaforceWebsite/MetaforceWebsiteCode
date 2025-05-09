@@ -1,3 +1,4 @@
+import moment from "moment";
 import { LocalStorage } from "quasar"
 
 export const pageStorage = {
@@ -16,3 +17,8 @@ export const pageStorage = {
 export async function suspend (ms = 3000) {
     await new Promise(resolve => setTimeout(resolve, ms));
 }
+
+export function formatDatetime (gmtDatetime) {
+    return gmtDatetime ? moment(gmtDatetime).format('YYYY-MM-DD, LT') : '';
+};
+

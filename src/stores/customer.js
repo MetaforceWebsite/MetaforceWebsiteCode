@@ -9,6 +9,9 @@ export const useCustomerStore = defineStore('customer', {
     }),
     getters: {
         isLoggedIn () { return this.loginToken; },
+        hasActiveSubscription () {
+            return this.subscriptions.some(sub => ['active', 'trialing'].includes(sub.easymeta__Status__c));
+        }
     },
     actions: {
         initLoginStore () {

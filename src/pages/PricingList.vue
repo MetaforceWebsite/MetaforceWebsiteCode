@@ -3,7 +3,7 @@
         <q-item-label class="text-h4">Metaforce Subscriptions</q-item-label>
     </div>
 
-    <q-list v-if="!isCheckoutLoaded" class="q-mx-xl q-mt-md">
+    <q-list class="q-mx-xl q-mt-md">
         <q-item class="q-pl-sm">
             <q-item-section class="text-body1" style="font-size:25px;">
                 <q-item-label>Choose a subscription plan</q-item-label>
@@ -32,7 +32,11 @@
             </q-list>
             <q-item class="q-pa-none q-my-md">
                 <q-item-section>
-                    <q-btn :disabled="!isPaddleInitialized" :loading="isCheckoutLoading" @click="subscribeNow" label="Subscribe Now" color="white" class="bg-positive" style="min-height:50px;" flat stretch no-caps></q-btn>
+                    <q-btn :disabled="!isPaddleInitialized" :loading="isCheckoutLoading" @click="subscribeNow" label="Subscribe Now" color="white" class="bg-positive" style="min-height:50px;" flat stretch no-caps>
+                        <template v-slot:loading>
+                            <q-spinner-bars size="sm"></q-spinner-bars>
+                        </template>
+                    </q-btn>
                 </q-item-section>
             </q-item>
             <q-item class="q-pa-none q-mt-md">
@@ -43,19 +47,6 @@
         </template>
     </q-list>
 
-    <div :style="`display:${isCheckoutLoaded?'block':'none'}`">
-        <div class="checkout-container"></div>
-        <q-list class="q-mx-xl q-my-sm">
-            <q-item class="q-pa-none q-mt-md">
-                <q-item-section class="col-2"></q-item-section>
-                <q-item-section>
-                    <q-btn label="Cancel" style="min-height:50px;" @click="clearCheckout" stretch no-caps></q-btn>
-                </q-item-section>
-                <q-item-section class="col-2"></q-item-section>
-            </q-item>
-        </q-list>
-
-    </div>
     <q-inner-loading :showing="isVerifyingSubs" style="background-color:rgba(255,255,255,0.8);" color="primary" label="Please wait...">
         <div><q-spinner-bars color="primary" size="md"></q-spinner-bars></div>
         <div class="q-mt-md text-primary text-h6">
@@ -65,11 +56,15 @@
 </template>
 
 <script>
-import { initializePaddle } from '@paddle/paddle-js';
-import { notifyError } from 'src/common/notify';
-import { pageStorage, suspend } from 'src/common/utils';
+import { initializePaddle, CheckoutEventNames } from '@paddle/paddle-js';
+import { useCustomerStore } from 'src/stores/customer';
+import { mapActions, mapState } from 'pinia'
+
+
+import { suspend } from 'src/common/utils';
 import { get } from 'src/common/request';
 import { METAFORCE_SERVICE_URL_CUSTOMER } from 'src/common/constants';
+
 
 const SANDBOX_CLIENT_API_TOKEN = 'test_ca588667e6359ffbb474343f37c';
 const SANDBOX_PRODUCT = 'pro_01jta1nqfnen7s2swak6yd9krz';
@@ -91,10 +86,10 @@ const PRICE_REQUESTS = {
         { quantity: 1, priceId: SANDBOX_ONE_TIME_PRICE },
 
         /* { quantity: 1, priceId: PROD_MONTHLY_PRICE }, */
-    ],
+    ]/* ,
     address: {
         countryCode: 'US'
-    }
+    } */
 };
 
 export default {
@@ -107,33 +102,24 @@ export default {
 
             isPricesLoading: false,
             isCheckoutLoading: false,
-            isCheckoutLoaded: false,
-            isCheckoutCompleted: false,
 
             isVerifyingSubs: false,
             counterOfVerify: 0
         }
     },
-    props: {
-        token: { type: String },
-    },
     computed: {
+        ...mapState(useCustomerStore, ['loginToken', 'customer', 'hasActiveSubscription']),
         isPaddleInitialized () { return this.paddle?.Initialized; },
     },
     methods: {
+        ...mapActions(useCustomerStore, ['updateCustomer']),
         paddleEventCallback (evt) {
-            if (evt.name == 'checkout.loaded') {
+            if (evt.name == CheckoutEventNames.CHECKOUT_LOADED) {
                 this.isCheckoutLoading = false;
-                this.isCheckoutLoaded = true;
-            } else if (evt.name == 'checkout.completed') {
-                this.isCheckoutCompleted = true;
+            } else if (evt.name == CheckoutEventNames.CHECKOUT_COMPLETED) {
+                this.paddle.Checkout.close();
                 this.isVerifyingSubs = true;
-
                 this.verifySubscription();
-            } else if (evt.name == 'checkout.warning') {
-
-            } else if (evt.name == 'checkout.error') {
-
             }
         },
         async initializePaddle () {
@@ -144,12 +130,11 @@ export default {
                     token: SANDBOX_CLIENT_API_TOKEN,
                     checkout: {
                         settings: {
+                            //allowLogout: true,
                             theme: "light",
-                            frameTarget: "checkout-container",
-                            displayMode: "inline",
+                            displayMode: "overlay",
                             frameInitialHeight: 450,
-                            frameStyle: "background-color:white;width:100%;",
-                            variant: "one-page"
+                            //variant: "one-page"
                         }
                     },
                     eventCallback: this.paddleEventCallback
@@ -165,7 +150,7 @@ export default {
             }
         },
         async loadPaddlePrices () {
-            const result = await Paddle.PricePreview(PRICE_REQUESTS);
+            const result = await this.paddle.PricePreview(PRICE_REQUESTS);
             this.paddlePrices = result.data.details.lineItems.map(item => {
                 let { id, name, description } = item.price;
                 let { discount, tax, total } = item.formattedTotals;
@@ -176,18 +161,13 @@ export default {
         },
 
         async verifySubscription () {
-            let customer = await await get(`${METAFORCE_SERVICE_URL_CUSTOMER}?token=${this.token}`);
+            let customer = await get(`${METAFORCE_SERVICE_URL_CUSTOMER}?token=${this.loginToken}`);
             if (customer.Id) {
-                let subscriptions = customer.easymeta__PaddleSubscriptions__r?.records || [];
-                let isValid = subscriptions.filter(sub => ['active', 'trialing'].includes(sub.easymeta__Status__c)).length > 0;
-                if (isValid) {
-                    this.clearCheckout();
+                this.updateCustomer(customer);
+
+                if (this.hasActiveSubscription || this.counterOfVerify >= 5) {
                     this.isVerifyingSubs = false;
-                    pageStorage.setCustomer(customer);
-                    this.$route.push('/customer');
-                } else if (this.counterOfVerify >= 10) {
-                    this.clearCheckout();
-                    this.isVerifyingSubs = false;
+                    this.$router.push('/customer');
                 } else {
                     await suspend(1000);
                     this.counterOfVerify++;
@@ -197,7 +177,7 @@ export default {
         },
 
         async subscribeNow () {
-            let customerEmail = pageStorage.getCustomer()?.easymeta__Email__c;
+            let customerEmail = this.customer?.easymeta__Email__c;
             let checkoutSetting = {
                 items: [
                     { priceId: this.selectedPriceId, quantity: 1 }
@@ -214,16 +194,11 @@ export default {
                 }
             }
         },
-        clearCheckout () {
-            document.querySelector('div.checkout-container').innerHTML = "";
-            this.isCheckoutLoaded = false;
-        },
     },
     async mounted () {
         let appToken = this.$route.query.token;
         if (appToken?.length > 30) {
-            this.loginToken = appToken;
-            pageStorage.setLoginToken(appToken);
+            this.updateLoginToken(appToken);
         }
 
         if (!this.paddle) this.initializePaddle()

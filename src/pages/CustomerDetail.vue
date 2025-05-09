@@ -52,7 +52,7 @@
                                     </td>
                                     <td class="text-left">{{rec.Subject}}</td>
                                     <td class="text-left">{{rec.Status}}</td>
-                                    <td class="text-left">{{rec.CreatedDate}}</td>
+                                    <td class="text-left">{{formatDatetime(rec.CreatedDate)}}</td>
                                 </tr>
                             </tbody>
                         </q-markup-table>
@@ -95,9 +95,9 @@
                                     </td>
                                     <td class="text-left">{{rec.Name}}</td>
                                     <td class="text-left">{{rec.easymeta__Status__c}}</td>
-                                    <td class="text-left">{{rec.easymeta__Started_At__c}}</td>
-                                    <td class="text-left">{{rec.easymeta__First_Billed_At__c}}</td>
-                                    <td class="text-left">{{rec.easymeta__Next_Billed_At__c}}</td>
+                                    <td class="text-left">{{formatDatetime(rec.easymeta__Started_At__c)}}</td>
+                                    <td class="text-left">{{formatDatetime(rec.easymeta__First_Billed_At__c)}}</td>
+                                    <td class="text-left">{{formatDatetime(rec.easymeta__Next_Billed_At__c)}}</td>
                                     <td class="text-left">{{rec.easymeta__Billing_Cycle__c}}</td>
                                 </tr>
                             </tbody>
@@ -146,7 +146,7 @@
 </template>
 
 <script>
-import { pageStorage } from 'src/common/utils'
+import { formatDatetime, pageStorage } from 'src/common/utils'
 import { METAFORCE_PADDLE_URL_SUBSCRIPTION_CANCEL, METAFORCE_SERVICE_URL_CUSTOMER, METAFORCE_SERVICE_URL_CUSTOMER_RELATED_LIST } from 'src/common/constants'
 import { put, get, post } from 'src/common/request'
 import { notifyError, notifyOk } from 'src/common/notify'
@@ -172,7 +172,9 @@ export default {
         }
     },
     methods: {
+        formatDatetime,
         async updateAccount () {
+
             let isValid = await this.$refs.formCmp.validate();
             if (isValid) {
                 this.isAccountUpdating = true;
@@ -194,7 +196,7 @@ export default {
             let result = await get(`${METAFORCE_SERVICE_URL_CUSTOMER_RELATED_LIST}?token=${this.loginToken}`)
             if (result.isSuccess) {
                 this.myCases = result.customer.easymeta__Cases__r?.records || [];
-                this.mySubscriptions = result.customer.easymeta__PaddleSubscriptions__r?.records || [];
+                this.mySubscriptions = (result.customer.easymeta__PaddleSubscriptions__r?.records || []);
             } else {
                 this.$router.push('/');
             }
