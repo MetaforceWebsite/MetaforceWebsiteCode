@@ -44,7 +44,7 @@
                         </div>
                     </div>
                     <div class="col">
-                        <q-img @click="popupImageName=require('assets/images/org-demo.png')" class="rounded-borders cursor-pointer" src="~assets/images/org-demo.png" />
+                        <q-img @click="popupImageName='src/assets/images/org-demo.png'" class="rounded-borders cursor-pointer" src="~assets/images/org-demo.png" />
                     </div>
                 </q-tab-panel>
 
@@ -72,7 +72,7 @@
                         </div>
                     </div>
                     <div class="col">
-                        <q-img @click="popupImageName=require('assets/images/project-demo.jpg')" class="rounded-borders cursor-pointer" src="~assets/images/project-demo.jpg" />
+                        <q-img @click="popupImageName='src/assets/images/project-demo.jpg'" class="rounded-borders cursor-pointer" src="~assets/images/project-demo.jpg" />
                     </div>
                 </q-tab-panel>
 
@@ -98,7 +98,7 @@
                         </div>
                     </div>
                     <div class="col">
-                        <q-img @click="popupImageName=require('assets/images/deployments-demo.jpg')" class="rounded-borders cursor-pointer" src="~assets/images/deployments-demo.jpg" />
+                        <q-img @click="popupImageName='src/assets/images/deployments-demo.jpg'" class="rounded-borders cursor-pointer" src="~assets/images/deployments-demo.jpg" />
                     </div>
                 </q-tab-panel>
 
@@ -123,7 +123,7 @@
                         </div>
                     </div>
                     <div class="col">
-                        <q-img @click="popupImageName=require('assets/images/data-demo.jpg')" class="rounded-borders cursor-pointer" src="~assets/images/data-demo.jpg" />
+                        <q-img @click="popupImageName='src/assets/images/data-demo.jpg'" class="rounded-borders cursor-pointer" src="~assets/images/data-demo.jpg" />
                     </div>
                 </q-tab-panel>
 
@@ -149,7 +149,7 @@
                         </div>
                     </div>
                     <div class="col">
-                        <q-img @click="popupImageName=require('assets/images/flow-demo.jpg')" class="rounded-borders cursor-pointer" src="~assets/images/flow-demo.jpg" />
+                        <q-img @click="popupImageName='src/assets/images/flow-demo.jpg'" class="rounded-borders cursor-pointer" src="~assets/images/flow-demo.jpg" />
                     </div>
                 </q-tab-panel>
             </q-tab-panels>
@@ -196,6 +196,9 @@ export default defineComponent({
     },
     methods: {
         openUrl (url) { openURL(url); }
+    },
+    mounted () {
+        console.log('???? home')
     }
 })
 </script>

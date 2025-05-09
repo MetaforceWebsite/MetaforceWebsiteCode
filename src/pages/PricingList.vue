@@ -35,9 +35,9 @@
                     <q-btn :disabled="!isPaddleInitialized" :loading="isCheckoutLoading" @click="subscribeNow" label="Subscribe Now" color="white" class="bg-positive" style="min-height:50px;" flat stretch no-caps></q-btn>
                 </q-item-section>
             </q-item>
-            <q-item v-if="!isInApp" class="q-pa-none q-mt-md">
+            <q-item class="q-pa-none q-mt-md">
                 <q-item-section>
-                    <q-btn label="Back" style="min-height:50px;" @click="goBack" flat stretch no-caps></q-btn>
+                    <q-btn label="Back" style="min-height:50px;" @click="$router.go(-1)" flat stretch no-caps></q-btn>
                 </q-item-section>
             </q-item>
         </template>
@@ -84,17 +84,17 @@ const PROD_MONTHLY_PRICE = 'pri_01jtqz2p1q9bxnzgkqng50fehb';
 
 const PRICE_REQUESTS = {
     items: [
-        /* { quantity: 1, priceId: SANDBOX_MONTHLY_PRICE },
+        { quantity: 1, priceId: SANDBOX_MONTHLY_PRICE },
         { quantity: 1, priceId: SANDBOX_QUARTERLY_PRICE },
         { quantity: 1, priceId: SANDBOX_HALFYEAR_PRICE },
         { quantity: 1, priceId: SANDBOX_YEARLY_PRICE },
-        { quantity: 1, priceId: SANDBOX_ONE_TIME_PRICE }, */
+        { quantity: 1, priceId: SANDBOX_ONE_TIME_PRICE },
 
-        { quantity: 1, priceId: PROD_MONTHLY_PRICE },
-    ]/* ,
+        /* { quantity: 1, priceId: PROD_MONTHLY_PRICE }, */
+    ],
     address: {
         countryCode: 'US'
-    } */
+    }
 };
 
 export default {
@@ -115,7 +115,6 @@ export default {
         }
     },
     props: {
-        isInApp: { type: Boolean, default: false },
         token: { type: String },
     },
     computed: {
@@ -141,8 +140,8 @@ export default {
             try {
                 this.isPricesLoading = true;
                 this.paddle = await initializePaddle({
-                    environment: "production",
-                    token: PROD_CLIENT_API_TOKEN,
+                    environment: "sandbox",
+                    token: SANDBOX_CLIENT_API_TOKEN,
                     checkout: {
                         settings: {
                             theme: "light",
@@ -175,50 +174,17 @@ export default {
             });
             this.isPricesLoading = false;
         },
-        async getCustomer () {
-            return await get(`${METAFORCE_SERVICE_URL_CUSTOMER}?token=${this.token}`);
-        },
-        async subscribeNow () {
-            let customer = pageStorage.getCustomer();
 
-            if (this.isInApp) {
-                customer = await this.getCustomer();
-                console.log(customer)
-            }
-
-            if (customer?.easymeta__Email__c) {
-                if (this.isPaddleInitialized) {
-                    try {
-                        this.isCheckoutLoading = true;
-                        this.paddle.Checkout.open({
-                            items: [
-                                { priceId: this.selectedPriceId, quantity: 1 }
-                            ],
-                            customer: {
-                                email: customer.easymeta__Email__c
-                            }
-                        });
-                    } catch (error) {
-                        console.error(`Checkout error: ${error.message}`);
-                    }
-                }
-            } else {
-                notifyError(`Please log in with your email, then continue to subscribe.`)
-            }
-        },
         async verifySubscription () {
-            let customer = await this.getCustomer();
+            let customer = await await get(`${METAFORCE_SERVICE_URL_CUSTOMER}?token=${this.token}`);
             if (customer.Id) {
                 let subscriptions = customer.easymeta__PaddleSubscriptions__r?.records || [];
                 let isValid = subscriptions.filter(sub => ['active', 'trialing'].includes(sub.easymeta__Status__c)).length > 0;
                 if (isValid) {
                     this.clearCheckout();
                     this.isVerifyingSubs = false;
-                    if (this.isInApp) {
-                        this.$emit('onCheckoutVerified', customer);
-                    } else {
-                        this.$route.push('/customer');
-                    }
+                    pageStorage.setCustomer(customer);
+                    this.$route.push('/customer');
                 } else if (this.counterOfVerify >= 10) {
                     this.clearCheckout();
                     this.isVerifyingSubs = false;
@@ -229,11 +195,29 @@ export default {
                 }
             }
         },
-        goBack () { this.$router.go(-1); },
+
+        async subscribeNow () {
+            let customerEmail = pageStorage.getCustomer()?.easymeta__Email__c;
+            let checkoutSetting = {
+                items: [
+                    { priceId: this.selectedPriceId, quantity: 1 }
+                ]
+            };
+            if (customerEmail) checkoutSetting['customer'] = { email: customerEmail };
+
+            if (this.isPaddleInitialized) {
+                try {
+                    this.isCheckoutLoading = true;
+                    this.paddle.Checkout.open(checkoutSetting);
+                } catch (error) {
+                    console.error(`Checkout error: ${error.message}`);
+                }
+            }
+        },
         clearCheckout () {
             document.querySelector('div.checkout-container').innerHTML = "";
             this.isCheckoutLoaded = false;
-        }
+        },
     },
     async mounted () {
         let appToken = this.$route.query.token;

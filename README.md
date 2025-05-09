@@ -1,6 +1,6 @@
-# MetaforceHome (metaforcehome)
+# Metaforce (metaforce)
 
-Metaforce Public Website
+Metaforce website
 
 ## Install the dependencies
 ```bash
@@ -31,11 +31,10 @@ npm run format
 ```
 
 
-
 ### Build the app for production
 ```bash
 quasar build
 ```
 
 ### Customize the configuration
-See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js).
+See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-vite/quasar-config-js).

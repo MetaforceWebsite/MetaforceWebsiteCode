@@ -4,7 +4,7 @@
             <q-toolbar class="bg-white text-black q-py-md">
                 <router-link to="/">
                     <q-avatar size="xl" style="font-size:50px;">
-                        <img :src="require('assets/metaforce.png')" />
+                        <img src="~assets/metaforce.png" />
                     </q-avatar>
                 </router-link>
                 <q-toolbar-title>
@@ -33,7 +33,7 @@
                         </q-item>
                     </q-list>
                 </q-btn-dropdown>
-                <q-btn v-else @click="isShowLogin=true" class="q-px-md" size="md" flat icon="login" label="Login"></q-btn>
+                <q-btn v-else @click="$refs.loginFormCmp.showLogin()" class="q-px-md" size="md" icon="login" label="Sign In" flat no-caps></q-btn>
             </q-toolbar>
         </q-header>
 
@@ -45,72 +45,61 @@
             <div class="bg-grey-1">
                 <q-toolbar class="text-black text-center" style="min-height:30px;">
                     <q-toolbar-title class="text-caption">
-                        © Copyright 2025 Metaforce+ | <router-link to="/privacy" class="policy-link">Privacy Policy</router-link>
+                        © Copyright 2025 Metaforce+ | <router-link to="/terms" class="policy-link">Term Of Use</router-link> | <router-link to="/privacy" class="policy-link">Privacy Policy</router-link>
                     </q-toolbar-title>
                 </q-toolbar>
             </div>
         </q-footer>
     </q-layout>
-    <q-dialog v-model="isShowLogin">
-        <q-card style="width:100%;">
-            <login-form @onLoginSuccess="loginSuccess"></login-form>
-        </q-card>
-    </q-dialog>
+
+    <login-form ref="loginFormCmp"></login-form>
 </template>
 
 <script>
+import { useCustomerStore } from 'src/stores/customer';
+import { mapActions, mapState } from 'pinia'
+
 import loginForm from 'src/components/loginForm.vue';
 
 import { METAFORCE_SERVICE_URL_CUSTOMER } from 'src/common/constants';
 import { get } from 'src/common/request';
-import { pageStorage } from 'src/common/utils';
+import { notifyError } from 'src/common/notify';
 
 export default {
     components: { loginForm },
     data () {
         return {
-            loginToken: null,
-            customer: null,
-            isLoadingCustomer: false,
             isShowLogin: false,
+
+            isLoadingCustomer: false,
         }
     },
     computed: {
+        ...mapState(useCustomerStore, ['loginToken', 'customer', 'subscriptions', 'isLoggedIn']),
         customerName () { return this.customer?.easymeta__FirstName__c || ''; },
-        isLoggedIn () { return this.customer?.Id?.length > 0; },
     },
     methods: {
+        ...mapActions(useCustomerStore, ['updateCustomer', 'clearLoginStore']),
         async initializeCustomer () {
             try {
                 this.isLoadingCustomer = true;
                 let customer = await get(`${METAFORCE_SERVICE_URL_CUSTOMER}?token=${this.loginToken}`);
                 if (customer.Id) {
-                    this.customer = customer;
-                    pageStorage.setCustomer(customer);
+                    this.updateCustomer(customer);
                 } else {
-                    this.customer = null;
-                    pageStorage.clearLoginCache();
+                    this.clearLoginStore();
                 }
             } catch (ex) {
-                this.customer = null;
-                pageStorage.clearLoginCache();
+                notifyError(ex);
             } finally {
                 this.isLoadingCustomer = false;
             }
-
-        },
-        loginSuccess ({ customer }) {
-            this.isShowLogin = false;
-            this.customer = customer;
         },
         signOut () {
-            pageStorage.clearLoginCache();
-            this.customer = null;
-            this.$router.push('/');
+            this.clearLoginStore();
         },
     },
     async mounted () {
-        this.loginToken = pageStorage.getLoginToken();
         if (this.loginToken) {
             this.initializeCustomer();
         }
