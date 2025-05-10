@@ -56,17 +56,17 @@
 </template>
 
 <script>
+import LoginForm from 'src/components/LoginForm.vue';
+
 import { useCustomerStore } from 'src/stores/customer';
 import { mapActions, mapState } from 'pinia'
-
-import loginForm from 'src/components/loginForm.vue';
 
 import { METAFORCE_SERVICE_URL_CUSTOMER } from 'src/common/constants';
 import { get } from 'src/common/request';
 import { notifyError } from 'src/common/notify';
 
 export default {
-    components: { loginForm },
+    components: { LoginForm },
     data () {
         return {
             isShowLogin: false,

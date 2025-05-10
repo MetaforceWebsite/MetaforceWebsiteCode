@@ -157,17 +157,19 @@
 </template>
 
 <script>
+import NewCasePopup from 'src/components/NewCasePopup.vue';
+import CaseDetailPopup from 'src/components/CaseDetailPopup.vue';
+
 import { useCustomerStore } from 'src/stores/customer';
 import { mapActions, mapState } from 'pinia'
 
 import { formatDatetime, suspend } from 'src/common/utils'
 import { METAFORCE_PADDLE_URL_SUBSCRIPTION_CANCEL, METAFORCE_PADDLE_URL_SUBSCRIPTION_RESTORE, METAFORCE_SERVICE_URL_CUSTOMER, METAFORCE_SERVICE_URL_CUSTOMER_RELATED_LIST } from 'src/common/constants'
 import { put, get, post } from 'src/common/request'
-import { notifyError, notifyOk } from 'src/common/notify'
-import newCasePopup from 'src/components/newCasePopup.vue'
-import CaseDetailPopup from 'src/components/caseDetailPopup.vue'
+import { notifyError, notifyOk } from 'src/common/notify';
+
 export default {
-    components: { newCasePopup, CaseDetailPopup },
+    components: { NewCasePopup, CaseDetailPopup },
     data () {
         return {
             myCases: [],
