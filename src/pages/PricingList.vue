@@ -2,6 +2,19 @@
     <div class="q-py-lg text-center bg-primary text-white">
         <q-item-label class="text-h4">Metaforce Subscriptions</q-item-label>
     </div>
+    <div v-if="hasActiveSubscription" class="row q-ma-md">
+        <div class="col"></div>
+        <q-banner inline-actions rounded class="col-5 bg-positive text-white text-center">
+            <template v-slot:avatar>
+                <q-icon name="campaign" />
+            </template>
+            <span>You have at least one active metaforce subscription already.</span>
+            <template v-slot:action>
+                <q-btn flat no-caps to="/customer" label="View" />
+            </template>
+        </q-banner>
+        <div class="col"></div>
+    </div>
 
     <q-list class="q-mx-xl q-mt-md">
         <q-item class="q-pl-sm">

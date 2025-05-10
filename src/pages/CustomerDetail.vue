@@ -91,7 +91,16 @@
                             <tbody>
                                 <tr v-for="(rec, index) in mySubscriptions" :key="index">
                                     <td class="">
-                                        <q-btn v-if="rec.easymeta__Status__c !='canceled'" label="Unsubscribe" color="negative" @click="showUnsubscribeAlert(rec)" dense no-caps outline></q-btn>
+                                        <q-btn v-if="rec.isCancelable" label="Unsubscribe" color="negative" @click="showUnsubscribeAlert(rec)" dense no-caps outline>
+                                            <template v-slot:loading>
+                                                <q-spinner-bars size="xs"></q-spinner-bars>
+                                            </template>
+                                        </q-btn>
+                                        <q-btn v-else-if="rec.isRestorable" label="Restore" color="positive" @click="restoreSubscription(rec)" :loading="isExecutingAction" dense no-caps outline>
+                                            <template v-slot:loading>
+                                                <q-spinner-bars size="xs"></q-spinner-bars>
+                                            </template>
+                                        </q-btn>
                                     </td>
                                     <td class="text-left">{{rec.Name}}</td>
                                     <td class="text-left">{{rec.easymeta__Status__c}}</td>
@@ -123,11 +132,13 @@
 
             <q-card-section>
                 <div class="text-subtitle2">We're truly sorry to see you go! </div>
-                <div class="q-my-md">
+                <div class="q-mt-md">
                     We've cherished having you as part of our services and appreciate every moment you've spent with us.
                     If there's anything we could have done better or any feedback you'd like to share, we'd be incredibly grateful to hear it.
                     Your insights can help us improve and offer an even better experience.
                 </div>
+                <div class="q-mb-md">After you unsubscribe, you can still restore the subscription easily.</div>
+
                 <div class="text-subtitle2">
                     Are you sure you want to unsubscribe?
                 </div>
@@ -135,7 +146,7 @@
 
             <q-card-actions align="right">
                 <q-btn flat label="Cancel" color="primary" v-close-popup no-caps />
-                <q-btn :loading="isUnsubscribing" @click="unsubscribe" label="Unsubscribe Now" color="negative" no-caps>
+                <q-btn :loading="isExecutingAction" @click="performSubscriptionAction('Unsubscribe')" label="Unsubscribe Now" color="negative" no-caps>
                     <template v-slot:loading>
                         <q-spinner-bars size="xs"></q-spinner-bars>
                     </template>
@@ -146,8 +157,11 @@
 </template>
 
 <script>
-import { formatDatetime, pageStorage } from 'src/common/utils'
-import { METAFORCE_PADDLE_URL_SUBSCRIPTION_CANCEL, METAFORCE_SERVICE_URL_CUSTOMER, METAFORCE_SERVICE_URL_CUSTOMER_RELATED_LIST } from 'src/common/constants'
+import { useCustomerStore } from 'src/stores/customer';
+import { mapActions, mapState } from 'pinia'
+
+import { formatDatetime, suspend } from 'src/common/utils'
+import { METAFORCE_PADDLE_URL_SUBSCRIPTION_CANCEL, METAFORCE_PADDLE_URL_SUBSCRIPTION_RESTORE, METAFORCE_SERVICE_URL_CUSTOMER, METAFORCE_SERVICE_URL_CUSTOMER_RELATED_LIST } from 'src/common/constants'
 import { put, get, post } from 'src/common/request'
 import { notifyError, notifyOk } from 'src/common/notify'
 import newCasePopup from 'src/components/newCasePopup.vue'
@@ -156,8 +170,6 @@ export default {
     components: { newCasePopup, CaseDetailPopup },
     data () {
         return {
-            loginToken: null,
-            customer: {},
             myCases: [],
             mySubscriptions: [],
 
@@ -165,16 +177,19 @@ export default {
             isRelatedListLoading: false,
 
             unsubscribeAlert: false,
-            isUnsubscribing: false,
+            isExecutingAction: false,
             selectedSubId: null,
 
             nameRules: [val => (val && val.length > 0) || 'Required'],
         }
     },
+    computed: {
+        ...mapState(useCustomerStore, ['loginToken', 'customer']),
+    },
     methods: {
+        ...mapActions(useCustomerStore, ['updateLoginToken']),
         formatDatetime,
         async updateAccount () {
-
             let isValid = await this.$refs.formCmp.validate();
             if (isValid) {
                 this.isAccountUpdating = true;
@@ -183,7 +198,6 @@ export default {
                     lastname: this.customer.easymeta__LastName__c
                 });
                 if (result.isSuccess) {
-                    pageStorage.setCustomer(this.customer);
                     notifyOk('Updated successfully.');
                 } else {
                     notifyError(result.message);
@@ -196,9 +210,13 @@ export default {
             let result = await get(`${METAFORCE_SERVICE_URL_CUSTOMER_RELATED_LIST}?token=${this.loginToken}`)
             if (result.isSuccess) {
                 this.myCases = result.customer.easymeta__Cases__r?.records || [];
-                this.mySubscriptions = (result.customer.easymeta__PaddleSubscriptions__r?.records || []);
+                this.mySubscriptions = (result.customer.easymeta__PaddleSubscriptions__r?.records || []).map(sub => {
+                    sub.isCancelable = sub.easymeta__Next_Billed_At__c != null;
+                    sub.isRestorable = sub.easymeta__Scheduled_Change_Action__c != null;
+                    return sub;
+                });
             } else {
-                this.$router.push('/');
+                this.clearLoginStore();
             }
             this.isRelatedListLoading = false;
         },
@@ -207,17 +225,32 @@ export default {
             this.unsubscribeAlert = true;
             this.selectedSubId = rec.easymeta__PaddleId__c;
         },
-        async unsubscribe () {
+        restoreSubscription (rec) {
+            this.selectedSubId = rec.easymeta__PaddleId__c;
+            this.performSubscriptionAction('Restore');
+        },
+
+        async performSubscriptionAction (actionType) {
             if (!this.selectedSubId) return;
 
-            this.isUnsubscribing = true;
-            let result = await post(METAFORCE_PADDLE_URL_SUBSCRIPTION_CANCEL, { subscriptionId: this.selectedSubId })
+            let actionEndpoint;
+            if (actionType == 'Unsubscribe') {
+                actionEndpoint = METAFORCE_PADDLE_URL_SUBSCRIPTION_CANCEL;
+            } else if (actionType == 'Restore') {
+                actionEndpoint = METAFORCE_PADDLE_URL_SUBSCRIPTION_RESTORE;
+            }
+
+            this.isExecutingAction = true;
+            let result = await post(actionEndpoint, { subscriptionId: this.selectedSubId })
             if (result.isSuccess) {
-                this.unsubscribeAlert = false;
+                await suspend(3000); //wait for seconds to ensure paddle send events out
+
+                if (actionType == 'Unsubscribe') this.unsubscribeAlert = false;
+                this.loadCustomerRelatedList();
             } else {
                 notifyError(result.message);
             }
-            this.isUnsubscribing = false;
+            this.isExecutingAction = false;
         },
         viewCaseDetail (caseRecord) {
             this.$refs.caseDetailCmp.show(caseRecord);
@@ -226,17 +259,11 @@ export default {
     async mounted () {
         let appToken = this.$route.query.token;
         if (appToken?.length > 30) {
-            this.loginToken = appToken;
-            pageStorage.setLoginToken(appToken);
+            this.updateLoginToken(appToken)
         }
-
-        this.loginToken = pageStorage.getLoginToken();
-        this.customer = pageStorage.getCustomer() || {};
 
         if (this.loginToken) {
             await this.loadCustomerRelatedList();
-        } else {
-            this.$router.push('/');
         }
     }
 }
