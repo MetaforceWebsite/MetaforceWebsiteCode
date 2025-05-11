@@ -4,6 +4,8 @@ import routes from './routes'
 
 import { useCustomerStore } from 'src/stores/customer'
 
+let globalRouter = null;
+
 /*
  * If not building with SSR mode, you can
  * directly export the Router instantiation;
@@ -28,10 +30,26 @@ export default route(function (/* { store, ssrContext } */) {
         history: createHistory(process.env.MODE === 'ssr' ? void 0 : process.env.VUE_ROUTER_BASE)
     });
 
-    router.beforeEach((to) => {
+    router.beforeEach(async (to) => {
         const customer = useCustomerStore();
-        if (to.meta.requiresAuth && !customer.isLoggedIn) return '/login'
-    })
+        if (to.meta.requiresAuth) {
+            if (to.query?.token) {
+                await customer.updateLoginToken(to.query?.token);
 
-    return router
+                //remove token param if login chekc
+                let queryParams = { ...to.query };
+                delete queryParams.token;
+                router.push({ path: to.path, query: queryParams });
+            }
+
+            if (!customer.isLoggedIn) {
+                return '/login';
+            }
+        }
+    });
+
+    globalRouter = router;
+    return router;
 })
+
+export { globalRouter };

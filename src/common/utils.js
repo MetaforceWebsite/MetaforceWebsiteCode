@@ -21,4 +21,3 @@ export async function suspend (ms = 3000) {
 export function formatDatetime (gmtDatetime) {
     return gmtDatetime ? moment(gmtDatetime).format('YYYY-MM-DD, LT') : '';
 };
-

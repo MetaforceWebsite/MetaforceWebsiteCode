@@ -52,6 +52,7 @@ export default {
                 });
                 if (result.isSuccess) {
                     this.$emit('onSubmitted');
+                    this.isShow = false;
                 } else {
                     notifyError(result.message);
                 }

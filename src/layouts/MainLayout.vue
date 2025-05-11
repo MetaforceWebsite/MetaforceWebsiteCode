@@ -57,12 +57,8 @@
 
 <script>
 import LoginForm from 'src/components/LoginForm.vue';
-
 import { useCustomerStore } from 'src/stores/customer';
-import { mapActions, mapState } from 'pinia'
 
-import { METAFORCE_SERVICE_URL_CUSTOMER } from 'src/common/constants';
-import { get } from 'src/common/request';
 import { notifyError } from 'src/common/notify';
 
 export default {
@@ -70,38 +66,28 @@ export default {
     data () {
         return {
             isShowLogin: false,
-
             isLoadingCustomer: false,
         }
     },
     computed: {
-        ...mapState(useCustomerStore, ['loginToken', 'customer', 'subscriptions', 'isLoggedIn']),
-        customerName () { return this.customer?.easymeta__FirstName__c || ''; },
+        isLoggedIn () { return useCustomerStore().isLoggedIn },
+        customerName () { return useCustomerStore().customer?.easymeta__FirstName__c || ''; },
     },
     methods: {
-        ...mapActions(useCustomerStore, ['updateCustomer', 'clearLoginStore']),
-        async initializeCustomer () {
+        signOut () {
+            useCustomerStore().clearLoginStore();
+        },
+    },
+    async mounted () {
+        if (this.isLoggedIn) {
             try {
                 this.isLoadingCustomer = true;
-                let customer = await get(`${METAFORCE_SERVICE_URL_CUSTOMER}?token=${this.loginToken}`);
-                if (customer.Id) {
-                    this.updateCustomer(customer);
-                } else {
-                    this.clearLoginStore();
-                }
+                await useCustomerStore().refreshCustomer();
             } catch (ex) {
                 notifyError(ex);
             } finally {
                 this.isLoadingCustomer = false;
             }
-        },
-        signOut () {
-            this.clearLoginStore();
-        },
-    },
-    async mounted () {
-        if (this.loginToken) {
-            this.initializeCustomer();
         }
     }
 }

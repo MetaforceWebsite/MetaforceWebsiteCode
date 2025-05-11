@@ -211,8 +211,7 @@ export default {
                     verificationCode: this.form.verificationCode
                 });
                 if (result.isSuccess) {
-                    useCustomerStore().updateLoginToken(result.message);
-                    useCustomerStore().updateCustomer(result.customer);
+                    await useCustomerStore().updateLoginToken(result.message);
                     this.isShowLogin = false;
                 } else {
                     notifyError(result.message);

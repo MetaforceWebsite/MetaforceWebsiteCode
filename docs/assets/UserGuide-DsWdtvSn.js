@@ -1,1 +1,0 @@
-import{_ as e,N as t,H as s}from"./index-CncY-yj6.js";const c={},o={src:"https://docs.metaforce.ltd/#/",style:{border:"0px",width:"100%",height:"calc(100vh - 110px)"}};function r(a,n,p,_,d,i){return s(),t("iframe",o)}const h=e(c,[["render",r]]);export{h as default};
