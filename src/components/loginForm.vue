@@ -2,7 +2,7 @@
     <q-dialog v-model="isShowLogin">
         <q-card class="row" style="max-width:none;min-width:700px;max-width:900px;width:70%;">
             <div class="col-5" style="min-height:500px;">
-                <q-carousel arrows animated v-model="slide" height="100%" class="gradient-bg" transition-prev="slide-right" transition-next="slide-left" infinite autoplay>
+                <q-carousel arrows animated v-model="slide" height="100%" class="gradient-bg" transition-prev="slide-right" transition-next="slide-left" navigation-position="top" navigation infinite autoplay>
                     <q-carousel-slide name="first" style="width:100%;">
                         <div class="absolute-top custom-caption q-py-xl text-center text-white" style="height:100%;background-color:rgba(0,0,0,0.3);">
                             <div class="q-mt-xl text-h3 text-bold">Metaforce</div>
@@ -223,6 +223,10 @@ export default {
                 this.isSubmitting = false;
             }
         }
+    },
+    mounted () {
+        this.$bus.off('showLogin');
+        this.$bus.on('showLogin', this.showLogin);
     }
 }
 </script>

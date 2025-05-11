@@ -52,7 +52,7 @@
         </q-footer>
     </q-layout>
 
-    <login-form ref="loginFormCmp"></login-form>
+    <login-form v-if="!isLoggedIn" ref="loginFormCmp"></login-form>
 </template>
 
 <script>

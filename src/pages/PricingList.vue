@@ -45,11 +45,23 @@
             </q-list>
             <q-item class="q-pa-none q-my-md">
                 <q-item-section>
-                    <q-btn :disabled="!isPaddleInitialized" :loading="isCheckoutLoading" @click="subscribeNow" label="Subscribe Now" color="white" class="bg-positive" style="min-height:50px;" flat stretch no-caps>
+                    <q-btn v-if="isLoggedIn" :disabled="!isPaddleInitialized" :loading="isCheckoutLoading" @click="subscribeNow" label="Subscribe Now" color="white" class="bg-positive" style="min-height:50px;" flat stretch no-caps>
                         <template v-slot:loading>
                             <q-spinner-bars size="sm"></q-spinner-bars>
                         </template>
                     </q-btn>
+                    <template v-else>
+                        <div class="row justify-center items-center">
+
+                            <span class="q-ml-xs text-caption">Before the subscription, you have to sign in to or sign up for Metaforce.</span>
+                        </div>
+                        <q-btn label="Sign In / Sign Up" @click="$bus.emit('showLogin')" color="white" class="bg-positive" style="min-height:50px;" flat stretch no-caps>
+                            <template v-slot:loading>
+                                <q-spinner-bars size="sm"></q-spinner-bars>
+                            </template>
+                        </q-btn>
+                    </template>
+
                 </q-item-section>
             </q-item>
             <q-item class="q-pa-none q-mt-md">
@@ -78,7 +90,6 @@ import { suspend } from 'src/common/utils';
 import { get } from 'src/common/request';
 import { METAFORCE_SERVICE_URL_CUSTOMER } from 'src/common/constants';
 
-
 const SANDBOX_CLIENT_API_TOKEN = 'test_ca588667e6359ffbb474343f37c';
 const SANDBOX_PRODUCT = 'pro_01jta1nqfnen7s2swak6yd9krz';
 const SANDBOX_MONTHLY_PRICE = 'pri_01jta1x1vj0r3q7ft9byvyam2t';
@@ -87,8 +98,12 @@ const SANDBOX_HALFYEAR_PRICE = 'pri_01jta252eyxyggvjnpehsbytgf';
 const SANDBOX_YEARLY_PRICE = 'pri_01jta26588t1nab896hrezmrtn';
 const SANDBOX_ONE_TIME_PRICE = 'pri_01jta2a2c2b9cadz106hr096cw';
 
-const PROD_CLIENT_API_TOKEN = 'live_d4d9aa787e98046fa2cddeaa266';
-const PROD_MONTHLY_PRICE = 'pri_01jtqz2p1q9bxnzgkqng50fehb';
+const PROD_CLIENT_API_TOKEN = 'live_a68dd372f7809ffb069202d9049';
+const PROD_MONTHLY_PRICE = 'pri_01jtyvx2mrfd78x92fnwyjmavq';
+const PROD_QUARTERLY_PRICE = 'pri_01jtyvy0pfvb450de3y8wr8jze';
+const PROD_HALFYEAR_PRICE = 'pri_01jtyvyqv9djjekg5ygjkbnbm0';
+const PROD_YEARLY_PRICE = 'pri_01jtyvzka5rrjgd2b7radjxc6c';
+const PROD_ONE_TIME_PRICE = 'pri_01jtyw0g3ph49twwt76qgh1gjz';
 
 const PRICE_REQUESTS = {
     items: [
@@ -121,7 +136,7 @@ export default {
         }
     },
     computed: {
-        ...mapState(useCustomerStore, ['loginToken', 'customer', 'hasActiveSubscription']),
+        ...mapState(useCustomerStore, ['loginToken', 'customer', 'isLoggedIn', 'hasActiveSubscription']),
         isPaddleInitialized () { return this.paddle?.Initialized; },
     },
     methods: {
