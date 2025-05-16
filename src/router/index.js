@@ -32,7 +32,11 @@ export default route(function (/* { store, ssrContext } */) {
 
     router.beforeEach(async (to) => {
         const customer = useCustomerStore();
-        if (to.meta.requiresAuth) {
+
+        if (to.path == '/' && to.query?._ptxn) {
+            router.push({ path: '/pricing', query: to.query });
+        }
+        else if (to.meta.requiresAuth) {
             if (to.query?.token) {
                 await customer.updateLoginToken(to.query?.token);
 
