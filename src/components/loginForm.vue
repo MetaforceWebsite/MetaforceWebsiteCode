@@ -97,7 +97,7 @@
                                     <q-item-label>The verification code has been sent to {{form.email}}.</q-item-label>
                                     <q-item-label caption>
                                         <q-icon name="help_outline"></q-icon>
-                                        Didn't receive a code? Resend the code in {{countDown}} seconds.
+                                        Didn't receive a code? Please <b>check your spam/junk mail</b> folder or resend the code in {{countDown}} seconds.
                                     </q-item-label>
                                 </q-item-section>
                             </q-item>
