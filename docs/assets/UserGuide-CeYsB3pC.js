@@ -1,0 +1,1 @@
+import{_ as e,S as t,K as s}from"./index-CBsg3mM9.js";const c={},o={src:"https://docs.metaforce.ltd/#/",style:{border:"0px",width:"100%",height:"calc(100vh - 110px)"}};function r(a,n,p,_,d,i){return s(),t("iframe",o)}const h=e(c,[["render",r]]);export{h as default};

@@ -154,7 +154,7 @@
                 </q-tab-panel>
             </q-tab-panels>
         </div>
-        <q-video style="height:600px;" src="https://www.youtube.com/embed/dmM-vb7pYpg"></q-video>
+        <q-video style="height:600px;" src="https://www.youtube.com/embed/TJDd52dErYM"></q-video>
 
         <q-dialog @hide="popupImageName=''" :model-value="isImagePopup">
             <q-card style="max-width:none;width:80vw;">
