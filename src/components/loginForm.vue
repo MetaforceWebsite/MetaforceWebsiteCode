@@ -105,7 +105,7 @@
                             <div class="text-center q-mt-xl">
                                 <q-btn :loading="isSubmitting" @click="submitForm" size="lg" color="primary" class="bg-primary text-white" no-caps flat>
                                     <template v-slot:loading>
-                                        <q-spinner-bars size="xs"></q-spinner-bars>
+                                        <q-spinner-bars size="sm"></q-spinner-bars>
                                     </template>
                                     <div class="row justify-center" style="width:150px;">
                                         <span>{{isSignIn ? "Sign In" : "Sign Up"}}</span>

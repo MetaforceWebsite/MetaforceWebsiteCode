@@ -7,7 +7,7 @@
                 <div style="margin-top:15px;font-size:1rem;">Org Management | Apex Development | Metadata Deployment | Data Migration | SOQL Explorer</div>
                 <span class="inline-block q-mt-lg" style="border-top:1px dashed white;border-bottom:1px dashed white;">Available On Mac OS, IPad, Windows</span>
             </div>
-            <div class="q-mt-lg">
+            <div>
                 <template v-for="(installButton, index) in installButtons" :key="index">
                     <q-btn no-caps class="q-py-sm q-ma-md" style="background-color:rgba(2,123,227,0.8);" type="a" target="_blank" :href="installButton.link" size="20px" flat :icon="installButton.icon" :label="installButton.label"></q-btn>
                 </template>
@@ -15,6 +15,7 @@
         </q-parallax>
 
         <div class="text-h4 text-weight-bolder text-grey-9 text-center q-mb-xl">Manage Easier.<span class="q-ml-md">Customize Faster.</span> </div>
+
         <div class="q-px-xl q-pb-md">
             <q-tabs v-model="focusedFeatureTab" active-class="text-weight-bold" :indicator-color="featuredTabColor" dense :active-color="featuredTabColor" align="justify">
                 <q-tab v-for="tabName in Object.keys(featureTabToColor)" :key="tabName" :name="tabName" :label="tabName" />
@@ -22,6 +23,9 @@
             <q-separator />
 
             <q-tab-panels v-model="focusedFeatureTab" animated>
+                <q-tab-panel name="Overview" class="row q-px-none featured-tab">
+                    <q-video style="width:100%;" :ratio="16/9" src="https://www.youtube.com/embed/TJDd52dErYM"></q-video>
+                </q-tab-panel>
                 <q-tab-panel name="Organizations" class="row q-py-xl featured-tab">
                     <div class="col-auto q-mt-xs q-mr-md">
                         <q-icon color="primary" size="sm" name="hub"></q-icon>
@@ -154,7 +158,6 @@
                 </q-tab-panel>
             </q-tab-panels>
         </div>
-        <q-video style="height:600px;" src="https://www.youtube.com/embed/TJDd52dErYM"></q-video>
 
         <q-dialog @hide="popupImageName=''" :model-value="isImagePopup">
             <q-card style="max-width:none;width:80vw;">
@@ -173,13 +176,14 @@ export default defineComponent({
     data () {
         return {
             featureTabToColor: {
+                'Overview': 'primary',
                 'Organizations': 'primary',
                 'Projects': 'deep-purple-9',
                 'Deployments': 'teal',
+                'Flow Organizer': 'indigo-8',
                 'Data Operations': 'cyan-9',
-                'Flow Organizer': 'indigo-8'
             },
-            focusedFeatureTab: 'Organizations',
+            focusedFeatureTab: 'Overview',
             popupImageName: '',
         }
     },
