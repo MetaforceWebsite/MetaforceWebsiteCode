@@ -50,6 +50,7 @@
                     </q-item-section>
                 </q-item>
             </q-list>
+            <div v-if="tips" class="q-mt-md text-center text-positive text-caption text-weight-medium">{{tips}}</div>
             <q-item class="q-pa-none q-my-md">
                 <q-item-section>
                     <q-btn v-if="isLoggedIn" :disabled="!isPaddleInitialized" :loading="isCheckoutLoading" @click="subscribeNow" label="Subscribe Now" color="white" class="bg-positive" style="min-height:50px;" flat stretch no-caps>
@@ -94,6 +95,7 @@ import { mapActions, mapState } from 'pinia'
 import { suspend } from 'src/common/utils';
 
 import { PADDLE_ENVIRONMENT_IS_SANDBOX, PADDLE_CLIENT_API_TOKEN, PADDLE_PRICE_REQUESTS } from 'src/common/constants';
+import moment from 'moment';
 
 export default {
     emits: ['onCheckoutVerified'],
@@ -114,7 +116,29 @@ export default {
     computed: {
         ...mapState(useCustomerStore, ['loginToken', 'customer', 'isLoggedIn', 'hasActiveSubscription']),
         isPaddleInitialized () { return this.paddle?.Initialized; },
-        isFromApp () { return this.$route.query.pid != null; }
+        isFromApp () { return this.$route.query.pid != null; },
+        tips () {
+            let selectedPaddlePrice = this.paddlePrices.find(pri => pri.id == this.selectedPriceId);
+            if (selectedPaddlePrice) {
+                let trailingEndDate = moment().add(7, 'days').format('MMM D, YYYY');
+                if (selectedPaddlePrice.name.startsWith('1 Month')) {
+                    return `7 days free, then ${selectedPaddlePrice.total} monthly starting from ${trailingEndDate}. You can cancel anytime before then.`;
+                } else if (selectedPaddlePrice.name.startsWith('3 Months')) {
+                    return `7 days free, then ${selectedPaddlePrice.total} every 3 months starting ${trailingEndDate}. You can cancel anytime before then.`;
+                } else if (selectedPaddlePrice.name.startsWith('6 Months')) {
+                    return `7 days free, then ${selectedPaddlePrice.total} every 6 months starting ${trailingEndDate}. You can cancel anytime before then.`;
+                } else if (selectedPaddlePrice.name.startsWith('12 Months')) {
+                    return `7 days free, then ${selectedPaddlePrice.total} yearly starting ${trailingEndDate}. You can cancel anytime before then.`;
+                } else if (selectedPaddlePrice.name == 'One Time Subscription') {
+                    return `Gain lifetime access to Metaforce. Pay once, use forever.`;
+                } else {
+                    return null;
+                }
+
+            } else {
+                return null;
+            }
+        }
     },
     methods: {
         ...mapActions(useCustomerStore, ['refreshCustomer']),
