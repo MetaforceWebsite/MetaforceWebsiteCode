@@ -5,7 +5,7 @@
             <div class="text-h6 q-ma-xl q-px-xl q-pt-md">
                 <div>Metaforce is a powerful salesforce administration and development tool <br />which helps you to manage and customize your salesforce organizations faster and easier!</div>
                 <div style="margin-top:15px;font-size:1rem;">Org Management | Apex Development | Metadata Deployment | Data Migration | SOQL Explorer</div>
-                <span class="inline-block q-mt-lg" style="border-top:1px dashed white;border-bottom:1px dashed white;">Available On Mac OS, IPad, Windows</span>
+                <span class="inline-block q-mt-lg" style="border-top:1px dashed white;border-bottom:1px dashed white;">Available On Mac, iPad, Windows</span>
             </div>
             <div>
                 <template v-for="(installButton, index) in installButtons" :key="index">

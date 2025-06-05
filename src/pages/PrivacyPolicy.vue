@@ -61,10 +61,7 @@
         <div class="q-my-lg">
             <p class="text-h5 text-bold">Contact Us</p>
             <div>
-                <div>If you have any questions about this Privacy Policy, You can contact us:</div>
-                <ul>
-                    <li>By email: allen.li.salesforce@gmail.com</li>
-                </ul>
+                <div>If you require any form of assistance, whether it's regarding product information, technical support, or any other matter, please do not hesitate to drop us an email at metaforce.salesforce@gmail.com.</div>
             </div>
         </div>
 
