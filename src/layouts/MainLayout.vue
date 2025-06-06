@@ -45,7 +45,10 @@
             <div class="bg-grey-1">
                 <q-toolbar class="text-black text-center" style="min-height:30px;">
                     <q-toolbar-title class="text-caption">
-                        © Copyright 2025 Metaforce+ | <router-link to="/terms" class="policy-link">Term Of Use</router-link> | <router-link to="/privacy" class="policy-link">Privacy Policy</router-link>
+                        © Copyright 2025 Metaforce+ |
+                        <router-link to="/terms" class="policy-link">Term Of Use</router-link> |
+                        <router-link to="/privacy" class="policy-link">Privacy Policy</router-link> |
+                        <router-link to="/contactus" class="policy-link">Contact Us</router-link>
                     </q-toolbar-title>
                 </q-toolbar>
             </div>

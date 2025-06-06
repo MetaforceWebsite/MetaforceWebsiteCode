@@ -9,7 +9,8 @@ const routes = [
             { path: 'guide', component: () => import('src/pages/UserGuide.vue') },
             { path: 'pricing', component: () => import('src/pages/PricingList.vue') },
             { path: 'privacy', component: () => import('src/pages/PrivacyPolicy.vue') },
-            { path: 'terms', component: () => import('src/pages/TermOfUse.vue') }
+            { path: 'terms', component: () => import('src/pages/TermOfUse.vue') },
+            { path: 'contactus', component: () => import('src/pages/ContactUs.vue') }
         ]
     },
     {
