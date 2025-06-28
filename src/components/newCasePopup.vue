@@ -1,6 +1,6 @@
 <template>
     <q-dialog v-model="isShow">
-        <q-card style="width:100%;">
+        <q-card style="max-width:none;width:90%;">
             <q-toolbar class="bg-primary text-white">
                 <q-icon name="contact_support" size="md"></q-icon>
                 <q-toolbar-title>Submit A Case</q-toolbar-title>
