@@ -1,13 +1,30 @@
 @font-face {
-    font-family: sora;
-    src: url(./Sora-VariableFont_wght.ttf);
+  font-family: sora;
+  src: url(./Sora-VariableFont_wght.ttf);
 }
 
 .hover-underline:hover {
-    text-decoration: underline;
-    cursor: pointer;
+  text-decoration: underline;
+  cursor: pointer;
 }
 .text-underline {
-    text-decoration: underline;
-    cursor: pointer;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.body--dark {
+  .bg-filled {
+    background-color: #282828;
+  }
+  .auto-bg-white-black {
+    background-color: $dark;
+  }
+}
+.body--light {
+  .bg-filled {
+    background-color: #f4f4f4;
+  }
+  .auto-bg-white-black {
+    background-color: white;
+  }
 }

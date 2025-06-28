@@ -30,6 +30,7 @@ const METAFORCE_SERVICE_URL_VERIFY_CODE = "/metaforce/verification-code/verify";
 
 const METAFORCE_SERVICE_URL_CUSTOMER = "/metaforce/customer";
 const METAFORCE_SERVICE_URL_CASE = "/metaforce/case";
+const METAFORCE_SERVICE_URL_CASE_COMMENT = "/metaforce/case_comment";
 
 export {
     PADDLE_ENVIRONMENT_IS_SANDBOX,
@@ -41,4 +42,5 @@ export {
 
     METAFORCE_SERVICE_URL_CUSTOMER,
     METAFORCE_SERVICE_URL_CASE,
+    METAFORCE_SERVICE_URL_CASE_COMMENT
 }

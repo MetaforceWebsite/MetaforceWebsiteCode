@@ -22,10 +22,8 @@
 </template>
 
 <script>
-import { post } from 'src/common/request';
 import { notifyError } from 'src/common/notify';
-import { METAFORCE_SERVICE_URL_CASE } from 'src/common/constants';
-
+import { useCustomerStore } from 'src/stores/customer';
 export default {
     data () {
         return {
@@ -36,20 +34,17 @@ export default {
             nameRules: [val => (val && val.length > 0) || 'Required']
         }
     },
-    props: {
-        customer: { type: Object, required: true },
-    },
+
     methods: {
         show () { this.isShow = true; },
         async submitCase () {
             let isValid = await this.$refs.caseFormCmp.validate();
             if (isValid) {
                 this.isSaving = true;
-                let result = await post(METAFORCE_SERVICE_URL_CASE, {
-                    customerId: this.customer.Id,
+                let result = await useCustomerStore().createCase({
                     subject: this.newCase.subject,
                     body: this.newCase.body
-                });
+                })
                 if (result.isSuccess) {
                     this.$emit('onSubmitted');
                     this.isShow = false;

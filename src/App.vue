@@ -10,6 +10,7 @@ export default defineComponent({
     name: 'App',
     mounted () {
         useCustomerStore().initLoginStore();
+        useCustomerStore().checkUnreadComments();
     }
 })
 </script>
