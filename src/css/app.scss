@@ -2,7 +2,9 @@
   font-family: sora;
   src: url(./Sora-VariableFont_wght.ttf);
 }
-
+.rich-text-html p {
+  margin: 0px;
+}
 .hover-underline:hover {
   text-decoration: underline;
   cursor: pointer;

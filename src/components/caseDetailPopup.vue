@@ -18,7 +18,7 @@
                     <q-item-section>
                         <q-item-label caption>Case Detail</q-item-label>
                         <q-item-label>
-                            <div v-html="caseRecord.easymeta__CaseDetail__c"></div>
+                            <div class="rich-text-html" v-html="caseRecord.easymeta__CaseDetail__c"></div>
                         </q-item-label>
                     </q-item-section>
                 </q-item>
@@ -37,7 +37,7 @@
                     <q-timeline color="secondary">
                         <template v-for="(comment, index) in caseRecord.CaseComments" :key="index">
                             <q-timeline-entry :subtitle="timelineTitle(comment)">
-                                <div v-html="comment.easymeta__Body__c"></div>
+                                <div class="rich-text-html" v-html="comment.easymeta__Body__c"></div>
                             </q-timeline-entry>
                         </template>
                     </q-timeline>

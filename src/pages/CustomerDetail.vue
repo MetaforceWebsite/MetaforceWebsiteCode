@@ -46,12 +46,19 @@
                     <tbody>
                         <tr v-for="(rec, index) in myCases" :key="index">
                             <td class="text-center" style="width:100px;">
-                                <q-btn @click="viewCaseDetail(rec)" icon="add_comment" :color="iconColor" size="md" no-caps flat dense></q-btn>
+                                <q-btn @click="viewCaseDetail(rec)" icon="comment" size="md" no-caps dense>
+                                    <q-tooltip class="text-nowrap">Add a case comment</q-tooltip>
+                                    <q-badge v-if="rec.CaseComments.length > 0" style="top:-5px;right:-12px;" rounded floating>
+                                        {{rec.CaseComments.length}}
+                                    </q-badge>
+                                </q-btn>
                             </td>
                             <td class="text-left">
                                 <a class="text-underline" @click="viewCaseDetail(rec)">
                                     {{rec.CaseNumber}}
-                                    <div v-if="rec.Unread" class="text-warning">You have {{rec.Unread}} unread comments.</div>
+                                    <div v-if="rec.Unread">
+                                        <q-badge color="warning">You have {{rec.Unread}} unread comments</q-badge>
+                                    </div>
                                 </a>
                             </td>
                             <td class="text-left">{{rec.Subject}}</td>
