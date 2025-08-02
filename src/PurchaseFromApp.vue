@@ -23,7 +23,7 @@
 <script>
 import { initializePaddle, CheckoutEventNames } from '@paddle/paddle-js';
 import { useCustomerStore } from 'src/stores/customer';
-import { mapState, mapActions } from 'pinia'
+import { mapState } from 'pinia'
 import { PADDLE_CLIENT_API_TOKEN, PADDLE_ENVIRONMENT_IS_SANDBOX } from 'src/common/constants';
 
 export default {
@@ -42,7 +42,6 @@ export default {
         ...mapState(useCustomerStore, ['customer', 'hasActiveSubscription']),
     },
     methods: {
-        ...mapActions(useCustomerStore, ['updateLoginToken']),
         closeWindow () { window.close(); },
         async paddleEventCallback (evt) {
             console.log(evt)
@@ -94,11 +93,7 @@ export default {
         },
     },
     async mounted () {
-        let { pid, token } = this.$route.query;
-        if (token) {
-            await this.updateLoginToken(token);
-        }
-
+        let { pid } = this.$route.query;
         if (pid != null) {
             this.selectedPriceId = pid;
             this.initializePaddlePricings();
