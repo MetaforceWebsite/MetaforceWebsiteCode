@@ -95,7 +95,9 @@ export default {
     },
     async mounted () {
         let { pid, token } = this.$route.query;
-        if (token) this.updateLoginToken(token);
+        if (token) {
+            await this.updateLoginToken(token);
+        }
 
         if (pid != null) {
             this.selectedPriceId = pid;
